@@ -42,16 +42,28 @@ public class main {
 				//Buscar la plantació i mostrar les unidats de cada espècie plantades
 				break;
 			case 6:
+				//Llistar dades de totes les especies
 				break;
 			case 7:
+				//Demanar nom especie
+				//Demanar edat
+				//mostrar quantitat de co2 que permet absorbir
 				break;
 			case 8:
+				//demanar dades nova especie de planta
+				//Afegir nova especie de planta
 				break;
 			case 9:
+				//demanar nom plantacio
+				//Esborrar les dades d'una plantacio
 				break;
 			case 10:
+				//Modificar l'any d'una plantació
+				//Demanar plantació que es vol cambiar l'any(demanar nom plantacio)
 				break;
 			case 11:
+				//Demanar plantacio, rodal
+				//Cambiar dades rodal
 				break;
 			case 12:
 				try {
@@ -70,11 +82,14 @@ public class main {
 					System.out.println(" - Error! Any no vàlid.\n");
 					scanner.next();
 				}
-
 				break;
 			case 13:
+				//Mostrar quantitat de CO2 que permet absorir cada rodal d'una plantacio en l'any actual
+				//demanar nom plantacio
 				break;
 			case 14:
+				//Mostrar quantitat de CO2 que permet absorir un conjunt de plantes d'una especie de totes les plantacions on estigui en l'any actual
+				//demanar nom plantacio
 				break;
 			case 15:
 				bucle = false;
