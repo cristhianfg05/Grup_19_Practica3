@@ -1,7 +1,19 @@
 package Dades;
 
-public  abstract class Planta {	// es abstract porque no se pueden crear plantas directamente
+public abstract class Planta { // es abstract porque no se pueden crear plantas directamente
 	private String nom;
-	private String tipus;
-	private float absorcio;
+
+	public Planta(String nom) {
+		this.nom = nom;
+	}
+	
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
 }
