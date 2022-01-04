@@ -29,4 +29,8 @@ public class Arbre extends Planta {
 	public void setEdatactual(int edatactual) {
 		this.edatactual = edatactual;
 	}
+	
+	public Planta copia() {
+		return new Arbre(this.getNom(),this.rangs,this.edatactual);
+	}
 }
