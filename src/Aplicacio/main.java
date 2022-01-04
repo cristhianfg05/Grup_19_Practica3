@@ -22,8 +22,8 @@ public class main {
 		int eleccio = -1, any, i, aux;
 		boolean trobat, bucle = true;
 		String text = "";
-		ListaPlantacions listaPlantacionsActual = new ListaPlantacions();
-
+		ListaPlantacions listaPlantacionsActual = null;
+		LlistaPlantes plantes = new LlistaPlantes();
 		/*
 		 * //demuestra que funciona int[] rang1= {1,2,3,4,5}; Arbre a1=new Arbre(rang1,
 		 * 1); Arbust ar1= new Arbust(2); Planta[] listaplantas= {a1,ar1}; TipusTerreny
@@ -35,7 +35,7 @@ public class main {
 		 */
 
 		any = demanaAnyValid(scanner);
-		InformeAfegits(LlegirFitxer(listaPlantacionsActual));
+		InformeAfegits(LlegirFitxer(listaPlantacionsActual, plantes));
 
 		// cargar datos automaticamente, si no carga nada porque no hay nada que cargar
 		// se notifica
@@ -46,7 +46,7 @@ public class main {
 
 			switch (eleccio) {
 			case 1:
-				InformeAfegits(LlegirFitxer(listaPlantacionsActual));
+				InformeAfegits(LlegirFitxer(listaPlantacionsActual, plantes));
 				// Carregar les dades dels fitxers
 				break;
 			case 2:
@@ -60,8 +60,8 @@ public class main {
 				// Llistar les dades de plantacions amb un rodal dun tipus de terreny
 
 				// Deamana TipusTerreny
-				// Comprobar plantacions amb aquest tipus terreny i imprimir les dades
-				
+				// Comprobar plantacions amb aquest tipus terreny i i,mprimir les dades
+
 				try {
 					System.out.print("Introdueix el nom del tipus de Terreny: ");
 					text = scanner.nextLine(); // en principio con poner nextline basta
@@ -84,7 +84,7 @@ public class main {
 				} catch (Exception e) {
 					System.out.println(" - Error al intentar cambiar l'any de la plantació.");
 				}
-				
+
 				break;
 			case 5:
 				// Donada una plantació, mostrar quantes unitats de cada espècie s'hi ha plantat
@@ -278,7 +278,7 @@ public class main {
 	}
 
 	// LEER DATOS
-	public static int LlegirFitxer(ListaPlantacions listaPlantacionsActual) {
+	public static int LlegirFitxer(ListaPlantacions listaPlantacionsActual, LlistaPlantes plantes) {
 		int resultado = 0;
 		// -1 error al añadir algo, 0 no se ha añadido nada
 		// 1 se ha añadido plantas, 2 se ha añadido plantaciones
@@ -286,11 +286,10 @@ public class main {
 		// 5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
 		// 7 se ha añadido todo
 		try {
-
 			// archivo plantas
 			// 0 - arbol || 1 - arbusto
 
-			BufferedReader readerPlantacions = new BufferedReader(new FileReader("plantes.txt"));
+			BufferedReader readerPlantacions = new BufferedReader(new FileReader("plantacions.txt"));
 			File archivoPlantes = new File("plantes.txt");
 
 			// existe el archivo?
@@ -298,7 +297,11 @@ public class main {
 				BufferedReader readerPlantes = new BufferedReader(new FileReader("plantes.txt"));
 
 				// crear lista plantas con tamaño segun lineas tenga el archivo de plantas
-				LlistaPlantes plantes = new LlistaPlantes(contarLineas(readerPlantes));
+				plantes = new LlistaPlantes(contarLineas(readerPlantes));
+
+				// Es torna a inicialitzar per poder llegir el contigut (un cop es saben les
+				// lines)
+				readerPlantes = new BufferedReader(new FileReader("plantes.txt"));
 
 				String line = readerPlantes.readLine();
 				while (line != null) {
@@ -306,8 +309,37 @@ public class main {
 					// al cargar los datos se tiene que inicializar todo
 					// line tiene toda la linea de texto
 
-					int[] rang1 = { 1, 2, 3, 4, 5 };
-					Arbre a1 = new Arbre(rang1, 1);
+					// 0 = arbol
+					if (Integer.valueOf(line.split(";")[0]) == 0) {
+
+						System.out.println(line);
+
+						// CODIGO QUE SEPARA LA LINEA EN ARRAYS DE RANGOS
+						/*
+						 * int rangEdat = new int[Integer.valueOf(line.split(";")[3]) * 2]; float
+						 * rangC02 = new float[Integer.valueOf(line.split(";")[3])]; int c = 0; int c2 =
+						 * 0; for (int i = 4; c < rangEdat.length; i += 3) { rangEdat[c] =
+						 * Integer.valueOf(line.split(";")[i]); System.out.println(rangEdat[c]); c++;
+						 * rangEdat[c] = Integer.valueOf(line.split(";")[i + 1]);
+						 * System.out.println(rangEdat[c]); c++; rangC02[c2] =
+						 * Float.valueOf((line.split(";")[i + 2])); System.out.println(rangC02[c2]);
+						 * c2++; }
+						 */
+						String rang[] = new String[Integer.valueOf(line.split(";")[3])];
+						int c = 0;
+						for (int i = 4; c < rang.length; i += 2) {
+							rang[c] = line.split(";")[i];
+							rang[c] += " " + line.split(";")[i + 1];
+							System.out.println(rang[c]);
+							c++;
+						}
+
+						Arbre arbol_nuevo = new Arbre(line.split(";")[1], rang, Integer.valueOf(line.split(";")[2]));
+						plantes.afegirPlanta(arbol_nuevo);
+					} else {
+						// 1 = arbusto
+
+					}
 
 					// read next line
 					line = readerPlantes.readLine();
