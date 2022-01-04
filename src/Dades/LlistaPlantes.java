@@ -1,5 +1,7 @@
 package Dades;
 
+import java.util.Arrays;
+
 public class LlistaPlantes {
 	private Planta[] lista;
 	private int numPlantes;
@@ -68,4 +70,5 @@ public class LlistaPlantes {
 		if (j + 1 < der)
 			ordenarListaQuickSort(listaP, j + 1, der);
 	}
+	
 }
