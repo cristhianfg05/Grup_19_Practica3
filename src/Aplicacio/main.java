@@ -1,6 +1,15 @@
 package Aplicacio;
 
+import Dades.Arbre;
+import Dades.Arbust;
+import Dades.ListaPlantacions;
+import Dades.LlistaPlantes;
+import Dades.Planta;
+import Dades.Plantacions;
+import Dades.Rodal;
+import Dades.TipusTerreny;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
@@ -13,7 +22,24 @@ public class main {
 		int eleccio = -1, any;
 		boolean bucle = true;
 
-		any = demanaAnyValid(scanner);
+		
+		/*
+		//demuestra que funciona
+		int[] rang1= {1,2,3,4,5};
+		Arbre a1=new Arbre(rang1, 1);
+		Arbust ar1= new Arbust(2);
+		Planta[] listaplantas= {a1,ar1};
+		TipusTerreny t1= new TipusTerreny(listaplantas, "Terreny 1");
+		Rodal r1=new Rodal(t1, 10);
+		Plantacions p= new Plantacions("Plantacions SA", 2, r1);
+		ListaPlantacions listaPlantacionsActual= new ListaPlantacions();
+		listaPlantacionsActual.afegirPlantacions(p);
+		listaPlantacionsActual.eliminarPlantacio(p);
+		System.out.println(listaPlantacionsActual);
+		*/
+		
+		any = demanaAnyValid(scanner);		
+		InformeAfegits(LlegirFitxer());
 		
 		//cargar datos automaticamente, si no carga nada porque no hay nada que cargar se notifica
 		
@@ -23,6 +49,7 @@ public class main {
 
 			switch (eleccio) {
 			case 1:
+				InformeAfegits(LlegirFitxer());
 				// Carregar les dades dels fitxers
 				break;
 			case 2:
@@ -107,8 +134,50 @@ public class main {
 		} while (bucle);
 	}
 
+	private static void InformeAfegits(int llegirFitxer) {
+
+		//-1 error al añadir algo, 0 no se ha añadido nada
+		// 1 se ha añadido plantas, 2 se ha añadido plantaciones
+		//3 se ha añadido terrenos, 4 se ha añadido plantas y plantaciones
+		//5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
+		//7 se ha añadido todo
+		switch (llegirFitxer) {
+		case -1:
+			System.out.println(" - Error al llegir algun fitxer.\n");
+			break;
+		case 0:
+			System.out.println(" - No s'ha carregat cap dada.\n");
+			break;
+		case 1:
+			System.out.println(" - S'han carregat les plantes.\n");
+			break;
+		case 2:
+			System.out.println(" - S'han carregat les plantacions.\n");
+			break;
+		case 3:
+			System.out.println(" - S'han carregat els terrenys.\n");
+			break;
+		case 4:
+			System.out.println(" - S'han carregat les plantes y les plantacions.\n");
+			break;
+		case 5:
+			System.out.println(" - S'han carregat les plantes y els terrenys.\n");
+			break;
+		case 6:
+			System.out.println(" - S'han carregat les plantacions y els terrenys.\n");
+			break;
+		case 7:
+			System.out.println(" - S'han carregat les plantes, plantacions y els terrenys.\n");
+			break;
+		default:
+			System.out.println("Error!!! - Opció default (Informació al carregar dades).");
+			// Mai entra al default
+			break;
+		}
+	}
+
 	private static void mostrarOpcions() {
-		System.out.println("\n[1] - Carregar les dades dels fitxers.");
+		System.out.println("[1] - Carregar les dades dels fitxers.");
 		System.out.println("[2] - Llistar les dades de tots els tipus de terreny.");
 		System.out.println("[3] - Llistar les dades de totes les plantacions.");
 		System.out.println("[4] - Llistar les dades de les plantacions que tenen algun rodal d’un tipus de terreny.");
@@ -163,31 +232,58 @@ public class main {
 	}
 
 	// LEER DATOS
-	public static void LlegirFitxer() {
+	public static int LlegirFitxer() {
+		int resultado = 0;
+		//-1 error al añadir algo, 0 no se ha añadido nada
+		// 1 se ha añadido plantas, 2 se ha añadido plantaciones
+		//3 se ha añadido terrenos, 4 se ha añadido plantas y plantaciones
+		//5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
+		//7 se ha añadido todo
 		try {
 			
+			//archivo plantas
+			//0 - arbol || 1 - arbusto	
+			
+			BufferedReader readerPlantacions = new BufferedReader(new FileReader("plantes.txt"));
+			File archivoPlantes = new File ("plantes.txt");
+
 			//existe el archivo?
-				//si
+			if (archivoPlantes.exists()) {
+				BufferedReader readerPlantes = new BufferedReader(new FileReader("plantes.txt"));
+				
+				//crear lista plantas con tamaño segun lineas tenga el archivo de plantas
+				LlistaPlantes plantes = new LlistaPlantes(contarLineas(readerPlantes));
+				
+				String line = readerPlantes.readLine();
+				while (line != null) {
 					//cargar datos
 					//al cargar los datos se tiene que inicializar todo
-			
-			//archivo plantas
-			//0 - arbol || 1 - arbusto
-			
-				//no
-					//hacer nada
-			
-			BufferedReader reader = new BufferedReader(new FileReader("dades.txt"));
-			String line = reader.readLine();
-			while (line != null) {
+					Planta aux = new Planta;
+					//line tiene toda la linea de texto				
+					
+					
 
-				// read next line
-				line = reader.readLine();
+					int[] rang1= {1,2,3,4,5};
+					Arbre a1=new Arbre(rang1, 1);
+					
+					
+					
+					
+					
+					
+					// read next line
+					line = readerPlantes.readLine();
+				}
+				readerPlantes.close();
+				resultado = 1;
+			} else {
+				
 			}
-			reader.close();
 		} catch (Exception e) {
 			System.out.println("!!! - Error al llegir el fitxer: " + e);
+			resultado = -1;
 		}
+		return resultado;
 	}
 
 	// GUARDAR DATOS
@@ -211,5 +307,9 @@ public class main {
 		} catch (Exception e) {
 			System.out.println("!!! - Error al guardar el fitxer: " + e);
 		}
+	}
+
+	public static int contarLineas(BufferedReader br) {	//simplemente contará cuantas líneas tiene el archivo original
+		return (int) br.lines().count();
 	}
 }

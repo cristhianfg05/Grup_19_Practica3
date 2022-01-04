@@ -4,4 +4,6 @@ public  abstract class Planta {	// es abstract porque no se pueden crear plantas
 	private String nom;
 	private String tipus;
 	private float absorcio;
+	
+	
 }

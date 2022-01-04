@@ -5,10 +5,10 @@ public class TipusTerreny {
 	private Planta[] listaplantas;
 	// faltaria algo para poner las unidades plantadas por hectarea
 
-	public TipusTerreny(Planta listaplantas, String nom) {
+	public TipusTerreny(Planta[] listaplantas, String nom) {
+		super();
 		this.nom=nom;
 		this.listaplantas = new Planta[5];			// asi hacemos que solo haya 5 tipos de Plantas
-		this.listaplantas[0] = listaplantas;		
 	}
 
 	public Planta[] getListaplantas() {

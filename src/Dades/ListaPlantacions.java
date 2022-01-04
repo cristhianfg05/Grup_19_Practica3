@@ -7,6 +7,7 @@ public class ListaPlantacions {
 	private int numPlantacions;
 	
 	public ListaPlantacions() {
+		super();
 		this.lista = new Plantacions[0];			// se crea una lista vacia
 		this.numPlantacions = 0;
 	}
@@ -54,6 +55,16 @@ public class ListaPlantacions {
 			}
 		}
 		return listaPlantacions;
+	}
+	
+	public void eliminarPlantacio(Plantacions p) {
+		for (int i=0; i<numPlantacions; i++) {
+			for (int j=i; j<=numPlantacions-2;j++) {
+				lista[j]=lista[j+1];
+			}
+			numPlantacions--;
+			i--;
+		}
 	}
 	
 }

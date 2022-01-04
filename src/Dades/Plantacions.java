@@ -6,7 +6,6 @@ public class Plantacions {
 	private Rodal rodals;
 
 	public Plantacions(String nom, int any, Rodal rodals) {
-		super();
 		this.nom = nom;
 		this.any = any;
 		this.rodals = rodals;
@@ -30,6 +29,7 @@ public class Plantacions {
 	public void setRodals(Rodal rodals) {
 		this.rodals = rodals;
 	}
-
+	
+	
 	
 }
