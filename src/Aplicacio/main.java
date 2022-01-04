@@ -14,7 +14,9 @@ public class main {
 		boolean bucle = true;
 
 		any = demanaAnyValid(scanner);
-
+		
+		//cargar datos automaticamente, si no carga nada porque no hay nada que cargar se notifica
+		
 		do {
 			mostrarOpcions();
 			eleccio = demanaEleccioValida(scanner);
@@ -163,6 +165,18 @@ public class main {
 	// LEER DATOS
 	public static void LlegirFitxer() {
 		try {
+			
+			//existe el archivo?
+				//si
+					//cargar datos
+					//al cargar los datos se tiene que inicializar todo
+			
+			//archivo plantas
+			//0 - arbol || 1 - arbusto
+			
+				//no
+					//hacer nada
+			
 			BufferedReader reader = new BufferedReader(new FileReader("dades.txt"));
 			String line = reader.readLine();
 			while (line != null) {
@@ -179,6 +193,13 @@ public class main {
 	// GUARDAR DATOS
 	public static void GuardarFitxer() {
 		try {
+			
+			//existe el archivo?
+				//si
+					//sobreescribir datos
+				//no
+					//crear archivo y guardar datos
+			
 			BufferedReader reader = new BufferedReader(new FileReader("dades.txt"));
 			String line = reader.readLine();
 			while (line != null) {

@@ -1,0 +1,11 @@
+0;Acer pseudoplatanus;10;5,8,-1
+0;Betula alba;10;4,7,12,-1
+0;Fraxinus excelsior;10;5,8,15,-1
+0;Pinus nigra;10;5,10,-1
+0;Pinus sylvestris;10;5,10,-1
+0;Populus nigra;10;4,7,14,-1
+0;Quercus ilex;10;4,6,10,-1
+1;Corylus Avellana;110
+1;Spartium junceum;85
+1;Erica multiflora;50
+1;Genista scorpius;100
