@@ -361,9 +361,14 @@ public class main {
 					arrayPlanta[2] = planta_aux;
 					arrayPlanta[3] = planta_aux;
 					arrayPlanta[4] = planta_aux;
-					terreny_nuevo = new TipusTerreny(arrayPlanta,"nom");
+					
+					//array
+					terreny_nuevo = new TipusTerreny(arrayPlanta,line.split(";")[2]);
 					rodal_nuevo = new Rodal (terreny_nuevo,2);
-					plantacion_nueva = new Plantacions("nom", 0, rodal_nuevo);
+					
+					//rodal deberia ser un array de rodals
+					
+					plantacion_nueva = new Plantacions(line.split(";")[0], Integer.valueOf(line.split(";")[1]), rodal_nuevo);
 					
 					
 					listaPlantacionsActual.afegirPlantacions(plantacion_nueva);
