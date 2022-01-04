@@ -19,80 +19,124 @@ public class main {
 
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		int eleccio = -1, any;
-		boolean bucle = true;
+		int eleccio = -1, any, i, aux;
+		boolean trobat, bucle = true;
+		String text = "";
+		ListaPlantacions listaPlantacionsActual = new ListaPlantacions();
 
-		
 		/*
-		//demuestra que funciona
-		int[] rang1= {1,2,3,4,5};
-		Arbre a1=new Arbre(rang1, 1);
-		Arbust ar1= new Arbust(2);
-		Planta[] listaplantas= {a1,ar1};
-		TipusTerreny t1= new TipusTerreny(listaplantas, "Terreny 1");
-		Rodal r1=new Rodal(t1, 10);
-		Plantacions p= new Plantacions("Plantacions SA", 2, r1);
-		ListaPlantacions listaPlantacionsActual= new ListaPlantacions();
-		listaPlantacionsActual.afegirPlantacions(p);
-		listaPlantacionsActual.eliminarPlantacio(p);
-		System.out.println(listaPlantacionsActual);
-		*/
-		
-		any = demanaAnyValid(scanner);		
-		InformeAfegits(LlegirFitxer());
-		
-		//cargar datos automaticamente, si no carga nada porque no hay nada que cargar se notifica
-		
+		 * //demuestra que funciona int[] rang1= {1,2,3,4,5}; Arbre a1=new Arbre(rang1,
+		 * 1); Arbust ar1= new Arbust(2); Planta[] listaplantas= {a1,ar1}; TipusTerreny
+		 * t1= new TipusTerreny(listaplantas, "Terreny 1"); Rodal r1=new Rodal(t1, 10);
+		 * Plantacions p= new Plantacions("Plantacions SA", 2, r1);
+		 * listaPlantacionsActual.afegirPlantacions(p);
+		 * listaPlantacionsActual.eliminarPlantacio(p);
+		 * System.out.println(listaPlantacionsActual);
+		 */
+
+		any = demanaAnyValid(scanner);
+		InformeAfegits(LlegirFitxer(listaPlantacionsActual));
+
+		// cargar datos automaticamente, si no carga nada porque no hay nada que cargar
+		// se notifica
+
 		do {
 			mostrarOpcions();
 			eleccio = demanaEleccioValida(scanner);
 
 			switch (eleccio) {
 			case 1:
-				InformeAfegits(LlegirFitxer());
+				InformeAfegits(LlegirFitxer(listaPlantacionsActual));
 				// Carregar les dades dels fitxers
 				break;
 			case 2:
 				// Llistar dades de tots els tipus de terreny
 				break;
 			case 3:
+				System.out.println(listaPlantacionsActual + "\n");
 				// Llistar les dades de totes les plantacions
 				break;
 			case 4:
 				// Llistar les dades de plantacions amb un rodal dun tipus de terreny
+
+				// Deamana TipusTerreny
+				// Comprobar plantacions amb aquest tipus terreny i imprimir les dades
 				
-				//Deamana TipusTerreny
-				//Comprobar plantacions amb aquest tipus terreny i imprimir les dades				
+				try {
+					System.out.print("Introdueix el nom del tipus de Terreny: ");
+					text = scanner.nextLine(); // en principio con poner nextline basta
+					trobat = false;
+					i = 0;
+					while (i < listaPlantacionsActual.getNumEstacions() && !trobat) {
+						// si el nom de la plantacio introducida esta en la lista de plantaciones
+						if (text.equalsIgnoreCase(listaPlantacionsActual.getLista()[i].getNom())) {
+							// Es demana l'any quan es troba la plantació (no abans)
+							System.out.print("Introdueix l'any: ");
+							any = demanaAnyValid(scanner);
+							listaPlantacionsActual.getLista()[i].setAny(any);
+							trobat = true;
+						}
+						i++;
+					}
+					if (!trobat) {
+						System.out.println(" - No s'ha trobat cap plantació amb el nom: " + text);
+					}
+				} catch (Exception e) {
+					System.out.println(" - Error al intentar cambiar l'any de la plantació.");
+				}
+				
 				break;
 			case 5:
-				//Donada una plantació, mostrar quantes unitats de cada espècie s'hi ha plantat
-				
-				//Demana plantació
-				//Buscar la plantació i mostrar les unidats de cada espècie plantades
+				// Donada una plantació, mostrar quantes unitats de cada espècie s'hi ha plantat
+
+				// Demana plantació
+				// Buscar la plantació i mostrar les unidats de cada espècie plantades
 				break;
 			case 6:
-				//Llistar dades de totes les especies
+				// Llistar dades de totes les especies
 				break;
 			case 7:
-				//Demanar nom especie
-				//Demanar edat
-				//mostrar quantitat de co2 que permet absorbir
+				// Demanar nom especie
+				// Demanar edat
+				// mostrar quantitat de co2 que permet absorbir
 				break;
 			case 8:
-				//demanar dades nova especie de planta
-				//Afegir nova especie de planta
+				// demanar dades nova especie de planta
+				// Afegir nova especie de planta
 				break;
 			case 9:
-				//demanar nom plantacio
-				//Esborrar les dades d'una plantacio
+				// demanar nom plantacio
+				// Esborrar les dades d'una plantacio
 				break;
 			case 10:
-				//Modificar l'any d'una plantació
-				//Demanar plantació que es vol cambiar l'any(demanar nom plantacio)
+				// Modificar l'any d'una plantació
+				// Demanar plantació que es vol cambiar l'any(demanar nom plantacio)
+				try {
+					System.out.print("Introdueix el nom de la plantació que vols cambiar l'any: ");
+					text = scanner.nextLine(); // en principio con poner nextline basta
+					trobat = false;
+					i = 0;
+					while (i < listaPlantacionsActual.getNumEstacions() && !trobat) {
+						// si el nom de la plantacio introducida esta en la lista de plantaciones
+						if (text.equalsIgnoreCase(listaPlantacionsActual.getLista()[i].getNom())) {
+							// Es demana l'any quan es troba la plantació (no abans)
+							System.out.print("Introdueix l'any: ");
+							aux = demanaAnyValid(scanner);
+							listaPlantacionsActual.getLista()[i].setAny(aux);
+							trobat = true;
+						}
+						i++;
+					}
+					if (!trobat) {
+						System.out.println(" - No s'ha trobat cap plantació amb el nom: " + text);
+					}
+				} catch (Exception e) {
+					System.out.println(" - Error al intentar cambiar l'any de la plantació.");
+				}
 				break;
 			case 11:
-				//Demanar plantacio, rodal
-				//Cambiar dades rodal
+				// Demanar plantacio, rodal
+				// Cambiar dades rodal
 				break;
 			case 12:
 				try {
@@ -113,12 +157,14 @@ public class main {
 				}
 				break;
 			case 13:
-				//Mostrar quantitat de CO2 que permet absorir cada rodal d'una plantacio en l'any actual
-				//demanar nom plantacio
+				// Mostrar quantitat de CO2 que permet absorir cada rodal d'una plantacio en
+				// l'any actual
+				// demanar nom plantacio
 				break;
 			case 14:
-				//Mostrar quantitat de CO2 que permet absorir un conjunt de plantes d'una especie de totes les plantacions on estigui en l'any actual
-				//demanar nom plantacio
+				// Mostrar quantitat de CO2 que permet absorir un conjunt de plantes d'una
+				// especie de totes les plantacions on estigui en l'any actual
+				// demanar nom plantacio
 				break;
 			case 15:
 				bucle = false;
@@ -136,11 +182,11 @@ public class main {
 
 	private static void InformeAfegits(int llegirFitxer) {
 
-		//-1 error al añadir algo, 0 no se ha añadido nada
+		// -1 error al añadir algo, 0 no se ha añadido nada
 		// 1 se ha añadido plantas, 2 se ha añadido plantaciones
-		//3 se ha añadido terrenos, 4 se ha añadido plantas y plantaciones
-		//5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
-		//7 se ha añadido todo
+		// 3 se ha añadido terrenos, 4 se ha añadido plantas y plantaciones
+		// 5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
+		// 7 se ha añadido todo
 		switch (llegirFitxer) {
 		case -1:
 			System.out.println(" - Error al llegir algun fitxer.\n");
@@ -232,52 +278,44 @@ public class main {
 	}
 
 	// LEER DATOS
-	public static int LlegirFitxer() {
+	public static int LlegirFitxer(ListaPlantacions listaPlantacionsActual) {
 		int resultado = 0;
-		//-1 error al añadir algo, 0 no se ha añadido nada
+		// -1 error al añadir algo, 0 no se ha añadido nada
 		// 1 se ha añadido plantas, 2 se ha añadido plantaciones
-		//3 se ha añadido terrenos, 4 se ha añadido plantas y plantaciones
-		//5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
-		//7 se ha añadido todo
+		// 3 se ha añadido terrenos, 4 se ha añadido plantas y plantaciones
+		// 5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
+		// 7 se ha añadido todo
 		try {
-			
-			//archivo plantas
-			//0 - arbol || 1 - arbusto	
-			
-			BufferedReader readerPlantacions = new BufferedReader(new FileReader("plantes.txt"));
-			File archivoPlantes = new File ("plantes.txt");
 
-			//existe el archivo?
+			// archivo plantas
+			// 0 - arbol || 1 - arbusto
+
+			BufferedReader readerPlantacions = new BufferedReader(new FileReader("plantes.txt"));
+			File archivoPlantes = new File("plantes.txt");
+
+			// existe el archivo?
 			if (archivoPlantes.exists()) {
 				BufferedReader readerPlantes = new BufferedReader(new FileReader("plantes.txt"));
-				
-				//crear lista plantas con tamaño segun lineas tenga el archivo de plantas
+
+				// crear lista plantas con tamaño segun lineas tenga el archivo de plantas
 				LlistaPlantes plantes = new LlistaPlantes(contarLineas(readerPlantes));
-				
+
 				String line = readerPlantes.readLine();
 				while (line != null) {
-					//cargar datos
-					//al cargar los datos se tiene que inicializar todo
-					Planta aux = new Planta;
-					//line tiene toda la linea de texto				
-					
-					
+					// cargar datos
+					// al cargar los datos se tiene que inicializar todo
+					// line tiene toda la linea de texto
 
-					int[] rang1= {1,2,3,4,5};
-					Arbre a1=new Arbre(rang1, 1);
-					
-					
-					
-					
-					
-					
+					int[] rang1 = { 1, 2, 3, 4, 5 };
+					Arbre a1 = new Arbre(rang1, 1);
+
 					// read next line
 					line = readerPlantes.readLine();
 				}
 				readerPlantes.close();
 				resultado = 1;
 			} else {
-				
+
 			}
 		} catch (Exception e) {
 			System.out.println("!!! - Error al llegir el fitxer: " + e);
@@ -289,13 +327,13 @@ public class main {
 	// GUARDAR DATOS
 	public static void GuardarFitxer() {
 		try {
-			
-			//existe el archivo?
-				//si
-					//sobreescribir datos
-				//no
-					//crear archivo y guardar datos
-			
+
+			// existe el archivo?
+			// si
+			// sobreescribir datos
+			// no
+			// crear archivo y guardar datos
+
 			BufferedReader reader = new BufferedReader(new FileReader("dades.txt"));
 			String line = reader.readLine();
 			while (line != null) {
@@ -309,7 +347,7 @@ public class main {
 		}
 	}
 
-	public static int contarLineas(BufferedReader br) {	//simplemente contará cuantas líneas tiene el archivo original
+	public static int contarLineas(BufferedReader br) { // simplemente contará cuantas líneas tiene el archivo original
 		return (int) br.lines().count();
 	}
 }
