@@ -3,9 +3,9 @@ package Dades;
 public class Plantacions {
 	private String nom;
 	private int any;
-	private Rodal rodals;
+	private Rodal[] rodals;
 
-	public Plantacions(String nom, int any, Rodal rodals) {
+	public Plantacions(String nom, int any, Rodal[] rodals) {
 		this.nom = nom;
 		this.any = any;
 		this.rodals = rodals;
@@ -23,13 +23,10 @@ public class Plantacions {
 	public void setAny(int any) {
 		this.any = any;
 	}
-	public Rodal getRodals() {
+	public Rodal[] getRodals() {
 		return rodals;
 	}
-	public void setRodals(Rodal rodals) {
+	public void setRodals(Rodal[] rodals) {
 		this.rodals = rodals;
 	}
-	
-	
-	
 }

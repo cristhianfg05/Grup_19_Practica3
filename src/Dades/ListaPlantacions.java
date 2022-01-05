@@ -49,9 +49,11 @@ public class ListaPlantacions {
 		ListaPlantacions[] listaPlantacions= new ListaPlantacions[numPlantacions];
 		int posicion=0;
 		for (int i=0; i<numPlantacions; i++) {
-			if (lista[i].getRodals().getTipus().getNom().equalsIgnoreCase(nom)) {
+			for (int j=0; j<lista[i].getRodals().length; j++) {
+			if (lista[i].getRodals()[j].getTipus().getNom().equalsIgnoreCase(nom)) {
 				listaPlantacions[posicion].afegirPlantacions(lista[i]);
 				posicion++;
+			}
 			}
 		}
 		return listaPlantacions;

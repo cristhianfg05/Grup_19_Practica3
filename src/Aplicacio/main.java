@@ -26,10 +26,8 @@ public class main {
 		LlistaPlantes listaPlantesActual = new LlistaPlantes();
 
 		any = demanaAnyValid(scanner);
-		InformeAfegits(LlegirFitxer(listaPlantacionsActual, listaPlantesActual));
-
-		// cargar datos automaticamente, si no carga nada porque no hay nada que cargar
-		// se notifica
+		listaPlantesActual = LlegirFitxerPlantes();
+		listaPlantacionsActual = LlegirFitxerPlantacions();
 
 		do {
 			mostrarOpcions();
@@ -37,7 +35,6 @@ public class main {
 
 			switch (eleccio) {
 			case 1:
-				InformeAfegits(LlegirFitxer(listaPlantacionsActual, listaPlantesActual));
 				// Carregar les dades dels fitxers
 				break;
 			case 2:
@@ -75,7 +72,6 @@ public class main {
 				} catch (Exception e) {
 					System.out.println(" - Error al intentar cambiar l'any de la plantació.");
 				}
-
 				break;
 			case 5:
 				// Donada una plantació, mostrar quantes unitats de cada espècie s'hi ha plantat
@@ -170,50 +166,153 @@ public class main {
 		} while (bucle);
 	}
 
-	private static void InformeAfegits(int llegirFitxer) {
+	// LEER DATOS
+	public static LlistaPlantes LlegirFitxerPlantes() {
+		LlistaPlantes listaPlantesActual = new LlistaPlantes();
+		try {
+			float rang[];
+			int c;
+			File archivoPlantes = new File("plantes.txt");
+			String line;
+			Arbre arbol_nuevo;
+			Arbust arbusto_nuevo;
+			if (archivoPlantes.exists()) {
+				BufferedReader readerPlantes = new BufferedReader(new FileReader("plantes.txt"));
+				listaPlantesActual = new LlistaPlantes(contarLineas(readerPlantes));
+				// Es torna a inicialitzar per poder llegir el contigut (un cop es saben les
+				// lines)
+				readerPlantes = new BufferedReader(new FileReader("plantes.txt"));
+				line = readerPlantes.readLine();
+				// archivo plantas
+				// 0 - arbol || 1 - arbusto
+				while (line != null) {
+					// 0 = arbol
+					if (Integer.valueOf(line.split(";")[0]) == 0) {
+						rang = new float[Integer.valueOf(line.split(";")[3])];
+						c = 4;
+						for (int i = 0; i < rang.length; i++) {
+							rang[i] = Float.valueOf(line.split(";")[c]);
+							c++;
+						}
+						arbol_nuevo = new Arbre(line.split(";")[1], rang, Integer.valueOf(line.split(";")[2]));
+						listaPlantesActual.afegirPlanta(arbol_nuevo);
+					} else {
+						// 1 = arbusto
+						arbusto_nuevo = new Arbust(Integer.valueOf(line.split(";")[2]), line.split(";")[1],
+								Float.valueOf(line.split(";")[3]));
+						listaPlantesActual.afegirPlanta(arbusto_nuevo);
+					}
+					// read next line
+					line = readerPlantes.readLine();
+				}
+				System.out.println(" - S'ha carregat l'arxiu de les plantes.");
+				readerPlantes.close();
+			} else {
+				System.out.println("- No hi ha arxiu de plantes que cargar.");
+			}
+		} catch (Exception e) {
+			System.out.println("!!! - Error al llegir el fitxer de les plantes: " + e);
+		}
+		return listaPlantesActual;
+	}
 
-		// -1 error al añadir algo, 0 no se ha añadido nada
-		// 1 se ha añadido plantas, 2 se ha añadido plantaciones
-		// 3 se ha añadido terrenos, 4 se ha añadido plantas y plantaciones
-		// 5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
-		// 7 se ha añadido todo
-		switch (llegirFitxer) {
-		case -1:
-			System.out.println(" - Error al llegir algun fitxer.\n");
-			break;
-		case 0:
-			System.out.println(" - No s'ha carregat cap dada.\n");
-			break;
-		case 1:
-			System.out.println(" - S'han carregat les plantes.\n");
-			break;
-		case 2:
-			System.out.println(" - S'han carregat les plantacions.\n");
-			break;
-		case 3:
-			System.out.println(" - S'han carregat els terrenys.\n");
-			break;
-		case 4:
-			System.out.println(" - S'han carregat les plantes y les plantacions.\n");
-			break;
-		case 5:
-			System.out.println(" - S'han carregat les plantes y els terrenys.\n");
-			break;
-		case 6:
-			System.out.println(" - S'han carregat les plantacions y els terrenys.\n");
-			break;
-		case 7:
-			System.out.println(" - S'han carregat les plantes, plantacions y els terrenys.\n");
-			break;
-		default:
-			System.out.println("Error!!! - Opció default (Informació al carregar dades).");
-			// Mai entra al default
-			break;
+	public static ListaPlantacions LlegirFitxerPlantacions() {
+		ListaPlantacions listaPlantacionsActual = new ListaPlantacions();
+		try {
+			// archivo plantas
+			// 0 - arbol || 1 - arbusto
+			File archivoPlantes = new File("plantes.txt");
+			String line;
+			Arbre arbol_nuevo;
+			Arbust arbusto_nuevo;
+			Plantacions plantacion_nueva;
+			Rodal rodal_nuevo;
+			Rodal[] array_rodal;
+			TipusTerreny terreny_nuevo;
+			// existe el archivo?
+
+//			System.out.println(listaPlantesActual.toString());
+			// LLEGIR PLANTACIONS
+
+			File archivoPlantacions = new File("plantacions.txt");
+
+			// existe el archivo?
+			if (archivoPlantacions.exists()) {
+				/*
+				 * //demuestra que funciona int[] rang1= {1,2,3,4,5}; Arbre a1=new Arbre(rang1,
+				 * 1); Arbust ar1= new Arbust(2); Planta[] listaplantas= {a1,ar1}; TipusTerreny
+				 * t1= new TipusTerreny(listaplantas, "Terreny 1"); Rodal r1=new Rodal(t1, 10);
+				 * Plantacions p= new Plantacions("Plantacions SA", 2, r1);
+				 * listaPlantacionsActual.afegirPlantacions(p);
+				 * listaPlantacionsActual.eliminarPlantacio(p);
+				 * System.out.println(listaPlantacionsActual);
+				 */
+
+				BufferedReader readerPlantacions = new BufferedReader(new FileReader("plantacions.txt"));
+				line = readerPlantacions.readLine();				
+				while (line != null) {
+					Planta[] arrayPlanta = new Planta[5];
+					Planta planta_aux = new Arbust(100, "NomArbust", 50);
+					arrayPlanta[0] = planta_aux;
+					arrayPlanta[1] = planta_aux;
+					arrayPlanta[2] = planta_aux;
+					arrayPlanta[3] = planta_aux;
+					arrayPlanta[4] = planta_aux;
+
+					// array
+					terreny_nuevo = new TipusTerreny(arrayPlanta, line.split(";")[2]);
+					rodal_nuevo = new Rodal(terreny_nuevo, 2);
+					array_rodal = new Rodal[Integer.valueOf(line.split(";")[2])];
+
+					// rodal deberia ser un array de rodals
+
+					plantacion_nueva = new Plantacions(line.split(";")[0], Integer.valueOf(line.split(";")[1]),
+							array_rodal);
+
+					listaPlantacionsActual.afegirPlantacions(plantacion_nueva);
+					// read next line
+					line = readerPlantacions.readLine();
+				}
+				System.out.println(" - S'ha carregat l'arxiu de les plantacions.");
+			} else {
+				System.out.println("- No hi ha arxiu de plantacions que cargar.");
+			}
+
+		} catch (Exception e) {
+			System.out.println("!!! - Error al llegir el fitxer de les plantacions: " + e);
+		}
+		return listaPlantacionsActual;
+	}
+
+	// GUARDAR DATOS
+	public static void GuardarFitxer() {
+		try {
+
+			// existe el archivo?
+			// si
+			// sobreescribir datos
+			// no
+			// crear archivo y guardar datos
+
+			BufferedReader reader = new BufferedReader(new FileReader("dades.txt"));
+			String line = reader.readLine();
+			while (line != null) {
+
+				// read next line
+				line = reader.readLine();
+			}
+			reader.close();
+		} catch (Exception e) {
+			System.out.println("!!! - Error al guardar el fitxer: " + e);
 		}
 	}
 
+	public static int contarLineas(BufferedReader br) { // simplemente contará cuantas líneas tiene el archivo original
+		return (int) br.lines().count();
+	}
+
 	private static void mostrarOpcions() {
-		System.out.println("[1] - Carregar les dades dels fitxers.");
+		System.out.println("\n[1] - Carregar les dades dels fitxers.");
 		System.out.println("[2] - Llistar les dades de tots els tipus de terreny.");
 		System.out.println("[3] - Llistar les dades de totes les plantacions.");
 		System.out.println("[4] - Llistar les dades de les plantacions que tenen algun rodal d’un tipus de terreny.");
@@ -267,159 +366,4 @@ public class main {
 		return any;
 	}
 
-	// LEER DATOS
-	public static int LlegirFitxer(ListaPlantacions listaPlantacionsActual, LlistaPlantes listaPlantesActual) {
-		int resultado = 0;
-		// -1 error al añadir algo, 0 no se ha añadido nada
-		// 1 se ha añadido plantas, 2 se ha añadido plantaciones
-		// 3 se ha añadido terrenos, 4 se ha añadido plantas y plantaciones
-		// 5 se ha añadido plantas y terrenos, 6 se ha añadido plantaciones y terrenos
-		// 7 se ha añadido todo
-		try {
-			// archivo plantas
-			// 0 - arbol || 1 - arbusto
-
-			File archivoPlantes = new File("plantes.txt");
-			String line;
-			Arbre arbol_nuevo;
-			Arbust arbusto_nuevo;
-			Plantacions plantacion_nueva;
-			Rodal rodal_nuevo;
-			TipusTerreny terreny_nuevo;
-			// existe el archivo?
-			if (archivoPlantes.exists()) {
-
-				// LLEGIR PLANTES
-				BufferedReader readerPlantes = new BufferedReader(new FileReader("plantes.txt"));
-
-				// crear lista plantas con tamaño segun lineas tenga el archivo de plantas
-				listaPlantesActual = new LlistaPlantes(contarLineas(readerPlantes));
-
-				// Es torna a inicialitzar per poder llegir el contigut (un cop es saben les
-				// lines)
-				readerPlantes = new BufferedReader(new FileReader("plantes.txt"));
-
-				line = readerPlantes.readLine();
-				while (line != null) {
-					// 0 = arbol
-					if (Integer.valueOf(line.split(";")[0]) == 0) {
-						// System.out.println(line);
-						String rang[] = new String[Integer.valueOf(line.split(";")[3])];
-						int c = 0;
-						for (int i = 4; c < rang.length; i += 2) {
-							rang[c] = line.split(";")[i];
-							rang[c] += " " + line.split(";")[i + 1];
-							// System.out.println(rang[c]);
-							c++;
-						}
-
-						arbol_nuevo = new Arbre(line.split(";")[1], rang, Integer.valueOf(line.split(";")[2]));
-						listaPlantesActual.afegirPlanta(arbol_nuevo);
-					} else {
-						// 1 = arbusto
-						arbusto_nuevo = new Arbust(Integer.valueOf(line.split(";")[3]), line.split(";")[1],
-								Float.valueOf(line.split(";")[2]));
-						listaPlantesActual.afegirPlanta(arbusto_nuevo);
-					}
-
-					// read next line
-					line = readerPlantes.readLine();
-				}
-				readerPlantes.close();
-				if (listaPlantesActual != null) {
-					resultado = 1;
-				} else {
-					System.out.println(" - La llista de Plantes Actual es NULL.");
-				}
-			} else {
-				System.out.println("- No hi ha arxiu de plantes que cargar.");
-			}
-
-			// LLEGIR PLANTACIONS
-
-			File archivoPlantacions = new File("plantacions.txt");
-
-			// existe el archivo?
-			if (archivoPlantacions.exists()) {
-				/*
-				 * //demuestra que funciona int[] rang1= {1,2,3,4,5}; Arbre a1=new Arbre(rang1,
-				 * 1); Arbust ar1= new Arbust(2); Planta[] listaplantas= {a1,ar1}; TipusTerreny
-				 * t1= new TipusTerreny(listaplantas, "Terreny 1"); Rodal r1=new Rodal(t1, 10);
-				 * Plantacions p= new Plantacions("Plantacions SA", 2, r1);
-				 * listaPlantacionsActual.afegirPlantacions(p);
-				 * listaPlantacionsActual.eliminarPlantacio(p);
-				 * System.out.println(listaPlantacionsActual);
-				 */
-
-				BufferedReader readerPlantacions = new BufferedReader(new FileReader("plantacions.txt"));
-				line = readerPlantacions.readLine();
-				while (line != null) {
-					Planta[] arrayPlanta = new Planta[5];
-					Planta planta_aux = new Arbust(100, "NomArbust", 50);
-					arrayPlanta[0] = planta_aux;
-					arrayPlanta[1] = planta_aux;
-					arrayPlanta[2] = planta_aux;
-					arrayPlanta[3] = planta_aux;
-					arrayPlanta[4] = planta_aux;
-					
-					//array
-					terreny_nuevo = new TipusTerreny(arrayPlanta,line.split(";")[2]);
-					rodal_nuevo = new Rodal (terreny_nuevo,2);
-					
-					//rodal deberia ser un array de rodals
-					
-					plantacion_nueva = new Plantacions(line.split(";")[0], Integer.valueOf(line.split(";")[1]), rodal_nuevo);
-					
-					
-					listaPlantacionsActual.afegirPlantacions(plantacion_nueva);
-					// read next line
-					line = readerPlantacions.readLine();
-				}
-
-				if (listaPlantacionsActual != null) {
-					if (resultado == 1) {
-						resultado = 4;
-					} else {
-						resultado = 2;
-					}
-				} else {
-					System.out.println(" - La llista de Plantacions Actual es NULL.");
-				}
-			} else {
-				System.out.println("- No hi ha arxiu de plantacions que cargar.");
-			}
-
-		} catch (Exception e) {
-			System.out.println("!!! - Error al llegir el fitxer: " + e);
-			resultado = -1;
-		}
-		return resultado;
-	}
-
-	// GUARDAR DATOS
-	public static void GuardarFitxer() {
-		try {
-
-			// existe el archivo?
-			// si
-			// sobreescribir datos
-			// no
-			// crear archivo y guardar datos
-
-			BufferedReader reader = new BufferedReader(new FileReader("dades.txt"));
-			String line = reader.readLine();
-			while (line != null) {
-
-				// read next line
-				line = reader.readLine();
-			}
-			reader.close();
-		} catch (Exception e) {
-			System.out.println("!!! - Error al guardar el fitxer: " + e);
-		}
-	}
-
-	public static int contarLineas(BufferedReader br) { // simplemente contará cuantas líneas tiene el archivo original
-		return (int) br.lines().count();
-	}
 }

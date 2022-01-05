@@ -17,5 +17,10 @@ public abstract class Planta { // es abstract porque no se pueden crear plantas 
 
 	protected abstract Planta copia();
 
+	@Override
+	public String toString() {
+		return "Planta [nom=" + nom + "]";
+	}
+	
 
 }

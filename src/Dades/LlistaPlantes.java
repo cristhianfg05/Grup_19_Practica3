@@ -10,12 +10,12 @@ public class LlistaPlantes {
 		this.lista = new Planta[2];
 		this.numPlantes = 0;
 	}
-
-	public LlistaPlantes(int dim) {
-		this.lista = new Planta[dim];
-		this.numPlantes = dim;
-	}
 	
+	public LlistaPlantes(int dim) {
+        this.lista = new Planta[dim];
+        this.numPlantes = 0;
+    }
+
 	public Planta[] getLista() {
 		return lista;
 	}
@@ -42,20 +42,20 @@ public class LlistaPlantes {
 		}
 		this.lista[numPlantes] = p;
 		numPlantes++;
-		//ordenarListaQuickSort(lista, 0, numPlantes);
+		//ordenarListaQuickSort(lista, 0, numPlantes-1);
 	}
 
 	private void ordenarListaQuickSort(Planta[] listaP, int izq, int der) {
 		// Ordenaremos las plantas por nombre alfabetico
-		char pivote = listaP[izq].getNom().toCharArray()[0];
+		Planta pivote = listaP[izq];
 		int i = izq;
 		int j = der;
 		Planta aux;
 
 		while (i < j) {
-			while (listaP[i].getNom().toCharArray()[0] <= pivote && i < j)
+			while (listaP[i].getNom().toCharArray()[0] <= pivote.getNom().toCharArray()[0] && i < j)
 				i++;
-			while (listaP[j].getNom().toCharArray()[0] > pivote)
+			while (listaP[j].getNom().toCharArray()[0] > pivote.getNom().toCharArray()[0])
 				j--;
 			if (i < j) {
 				aux = listaP[i].copia();
@@ -65,10 +65,20 @@ public class LlistaPlantes {
 			}
 		}
 
+		listaP[izq] = listaP[j].copia();
+		listaP[j] = pivote.copia();
+		
 		if (izq < j - 1)
 			ordenarListaQuickSort(listaP, izq, j - 1);
 		if (j + 1 < der)
 			ordenarListaQuickSort(listaP, j + 1, der);
 	}
+
+	@Override
+	public String toString() {
+		return "LlistaPlantes [lista=" + Arrays.toString(lista) + ", numPlantes=" + numPlantes + "]";
+	}
+	
+	//METODO DEVOLVER CO2 A PARTIR DE NOMBRE ESPECIE Y EDAT
 	
 }
