@@ -23,6 +23,11 @@ public class Rodal {
 	public void setSuperficie(double superficie) {
 		this.superficie = superficie;
 	}
+
+	@Override
+	public String toString() {
+		return "Rodal [tipus=" + tipus + ", superficie=" + superficie + "]";
+	}
 	
 	
 }

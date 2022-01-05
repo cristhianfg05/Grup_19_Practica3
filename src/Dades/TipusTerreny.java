@@ -1,5 +1,7 @@
 package Dades;
 
+import java.util.Arrays;
+
 public class TipusTerreny {
 	private String nom;
 	private Planta[] listaplantas;
@@ -25,6 +27,11 @@ public class TipusTerreny {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	@Override
+	public String toString() {
+		return "TipusTerreny [nom=" + nom + ", listaplantas=" + Arrays.toString(listaplantas) + "]";
 	}
 	
 	

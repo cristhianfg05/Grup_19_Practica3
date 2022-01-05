@@ -1,5 +1,7 @@
 package Dades;
 
+import java.util.Arrays;
+
 public class Plantacions {
 	private String nom;
 	private int any;
@@ -29,4 +31,11 @@ public class Plantacions {
 	public void setRodals(Rodal[] rodals) {
 		this.rodals = rodals;
 	}
+
+	@Override
+	public String toString() {
+		return "Plantacions -> Nom: " + nom + ", Any: " + any + ", Rodals-> " + Arrays.toString(rodals);
+	}
+	
+	
 }

@@ -30,7 +30,7 @@ public class ListaPlantacions {
 
 	@Override
 	public String toString() {
-		return "ListaPlantacions [lista=" + Arrays.toString(lista) + ", numEstacions=" + numPlantacions + "]";
+		return "ListaPlantacions -> lista: " + Arrays.toString(lista) + ", numPlantacions: " + numPlantacions;
 	}
 	
 	public void afegirPlantacions(Plantacions p) {
@@ -48,11 +48,11 @@ public class ListaPlantacions {
 	public ListaPlantacions[] llistaPlantacionsSegunRodal (String nom) {
 		ListaPlantacions[] listaPlantacions= new ListaPlantacions[numPlantacions];
 		int posicion=0;
-		for (int i=0; i<numPlantacions; i++) {
-			for (int j=0; j<lista[i].getRodals().length; j++) {
+		for (int i=0; i<numPlantacions; i++) {	
+			for (int j=0; j<lista[i].getRodals().length;j++) {
 			if (lista[i].getRodals()[j].getTipus().getNom().equalsIgnoreCase(nom)) {
 				listaPlantacions[posicion].afegirPlantacions(lista[i]);
-				posicion++;
+				posicion++;	
 			}
 			}
 		}
