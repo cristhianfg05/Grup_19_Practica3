@@ -32,6 +32,14 @@ public class main {
 		listaPlantacionsActual = LlegirFitxerPlantacions();
 		listaTipusTerrenyActual = LlegirFitxerTipusTerreny();
 
+		//PRIMERO LISTA PLANTAS
+		//LUEGO LISTA TERRENOS
+		//ULTIMO LISTA PLANTACIONES		
+		//ORDEN DE AÑADIR DA IGUAL PORQUE NO SE RELACIONAN		
+		//PLANTACION[] -> PLANTACION -> RODALS[] -> RODAL -> TIPUS TERRENY -> PLANTAS[]
+		
+		
+		
 		do {
 			mostrarOpcions();
 			eleccio = demanaEleccioValida(scanner);
@@ -174,10 +182,10 @@ public class main {
 		try {
 			float rang[];
 			int c;
-			File archivoPlantes = new File("plantes.txt");
 			String line;
 			Arbre arbol_nuevo;
 			Arbust arbusto_nuevo;
+			File archivoPlantes = new File("plantes.txt");
 			if (archivoPlantes.exists()) {
 				BufferedReader reader = new BufferedReader(new FileReader("plantes.txt"));
 				listaPlantesActual = new LlistaPlantes(contarLineas(reader));
@@ -221,38 +229,23 @@ public class main {
 	public static ListaPlantacions LlegirFitxerPlantacions() {
 		ListaPlantacions listaPlantacionsActual = new ListaPlantacions();
 		try {
-			// archivo plantas
-			// 0 - arbol || 1 - arbusto
-			File archivoPlantes = new File("plantes.txt");
 			String line;
-			Arbre arbol_nuevo;
-			Arbust arbusto_nuevo;
 			Plantacions plantacion_nueva;
 			Rodal rodal_nuevo;
 			Rodal[] array_rodal;
-			TipusTerreny terreny_nuevo;
-			// existe el archivo?
-
-//			System.out.println(listaPlantesActual.toString());
-			// LLEGIR PLANTACIONS
-
+			TipusTerreny terreny_nuevo;			
 			File archivoPlantacions = new File("plantacions.txt");
-
 			// existe el archivo?
 			if (archivoPlantacions.exists()) {
-				/*
-				 * //demuestra que funciona int[] rang1= {1,2,3,4,5}; Arbre a1=new Arbre(rang1,
-				 * 1); Arbust ar1= new Arbust(2); Planta[] listaplantas= {a1,ar1}; TipusTerreny
-				 * t1= new TipusTerreny(listaplantas, "Terreny 1"); Rodal r1=new Rodal(t1, 10);
-				 * Plantacions p= new Plantacions("Plantacions SA", 2, r1);
-				 * listaPlantacionsActual.afegirPlantacions(p);
-				 * listaPlantacionsActual.eliminarPlantacio(p);
-				 * System.out.println(listaPlantacionsActual);
-				 */
-
 				BufferedReader reader = new BufferedReader(new FileReader("plantacions.txt"));
 				line = reader.readLine();
 				while (line != null) {
+					//PRIMERO LISTA PLANTAS
+					//LUEGO LISTA TERRENOS
+					//ULTIMO LISTA PLANTACIONES		
+					//ORDEN DE AÑADIR DA IGUAL PORQUE NO SE RELACIONAN		
+					//PLANTACION[] -> PLANTACION -> RODALS[] -> RODAL -> TIPUS TERRENY -> PLANTAS[]
+					
 					Planta[] arrayPlanta = new Planta[5];
 					Planta planta_aux = new Arbust(100, "NomArbust", 50);
 					arrayPlanta[0] = planta_aux;
@@ -299,7 +292,6 @@ public class main {
 		return listaPlantacionsActual;
 	}
 
-	
 	public static ListaTipusTerreny LlegirFitxerTipusTerreny() {
 		ListaTipusTerreny listaTipusTerrenyActual = new ListaTipusTerreny();
 		try {
