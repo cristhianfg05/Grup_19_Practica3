@@ -36,5 +36,4 @@ public class Arbust extends Planta {
 		return "Arbust [edatMaxima=" + edatMaxima + ", absorcioCO2=" + absorcioCO2 + "]";
 	}
 	
-	
 }

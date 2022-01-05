@@ -39,6 +39,9 @@ public class Arbre extends Planta {
 		return "Arbre [rangs=" + Arrays.toString(rangs) + ", edatactual=" + edatactual + "]";
 	}
 
+	public float getAbsorcioCO2() {
+		return rangs[edatactual];
+	}
 	
 	
 	
