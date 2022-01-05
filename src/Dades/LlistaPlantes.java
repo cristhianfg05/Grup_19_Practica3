@@ -1,5 +1,7 @@
 package Dades;
 
+import java.util.Arrays;
+
 public class LlistaPlantes {
 	private Planta[] lista;
 	private int numPlantes;
@@ -66,4 +68,12 @@ public class LlistaPlantes {
 		if (j + 1 < der)
 			ordenarListaQuickSort(listaP, j + 1, der);
 	}
+
+	@Override
+	public String toString() {
+		return "LlistaPlantes [lista=" + Arrays.toString(lista) + ", numPlantes=" + numPlantes + "]";
+	}
+	
+	//METODO DEVOLVER CO2 A PARTIR DE NOMBRE ESPECIE Y EDAT
+	
 }

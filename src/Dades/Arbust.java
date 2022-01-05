@@ -30,4 +30,11 @@ public class Arbust extends Planta {
 	public Planta copia() {
 		return new Arbust(this.edatMaxima,this.getNom(),this.absorcioCO2);
 	}
+
+	@Override
+	public String toString() {
+		return "Arbust [edatMaxima=" + edatMaxima + ", absorcioCO2=" + absorcioCO2 + "]";
+	}
+	
+	
 }

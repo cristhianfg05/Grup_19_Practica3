@@ -1,24 +1,24 @@
 package Dades;
 
+import java.util.Arrays;
+
 public class Arbre extends Planta {
 	
-	private int[] rangs; 
-	// EN EL FICHERO RECIBIMOS UN NUMERO QUE NOS DARA LA CANTIDAD DE RANGOS (el
-	// numero recibido x 2)
+	private float[] rangs; 
 	private int edatactual;
 
-	public Arbre(String nom, int[] rangs, int edatactual) {
+	public Arbre(String nom, float[] rangs, int edatactual) {
 		super(nom);
 		this.rangs = rangs;
 		this.edatactual = edatactual;
 	}
 	//NO HAY QUE REALIZAR CALCULO, VIENE TODO EN EL FICHERO
 
-	public int[] getRangs() {
+	public float[] getRangs() {
 		return rangs;
 	}
 
-	public void setRangs(int[] rangs) {
+	public void setRangs(float[] rangs) {
 		this.rangs = rangs;
 	}
 
@@ -33,4 +33,13 @@ public class Arbre extends Planta {
 	public Planta copia() {
 		return new Arbre(this.getNom(),this.rangs,this.edatactual);
 	}
+
+	@Override
+	public String toString() {
+		return "Arbre [rangs=" + Arrays.toString(rangs) + ", edatactual=" + edatactual + "]";
+	}
+
+	
+	
+	
 }
