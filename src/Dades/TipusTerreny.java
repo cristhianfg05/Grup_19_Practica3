@@ -27,6 +27,11 @@ public class TipusTerreny {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
+
+	@Override
+	public String toString() {
+		return "TipusTerreny [nom=" + nom + ", listaplantas=" + listaplantas + "]";
+	}
 	
 	
 }

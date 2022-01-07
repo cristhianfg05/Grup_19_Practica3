@@ -9,9 +9,17 @@ import Dades.Planta;
 import Dades.Plantacions;
 import Dades.Rodal;
 import Dades.TipusTerreny;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class main {
@@ -22,26 +30,44 @@ public class main {
 		Scanner scanner = new Scanner(System.in);
 		int eleccio = -1, any, i, aux;
 		boolean trobat, bucle = true;
+		char tria;
 		String text = "";
 		ListaPlantacions listaPlantacionsActual = new ListaPlantacions();
-		LlistaPlantes listaPlantesActual = new LlistaPlantes();
 		ListaTipusTerreny listaTipusTerrenyActual = new ListaTipusTerreny();
+		LlistaPlantes listaPlantesActual = new LlistaPlantes();
 
+		listaPlantesActual = LlegirFitxerPlantes(); // listaPlantesActual se añade OK
+		
+		listaTipusTerrenyActual = LlegirFitxerTipusTerreny(); // Hay que crear el objeto terreny a mano (faltan metodos
+																// para hacerlo (el buscar arbusto/arbol de listaPlantas
+																// x ejemplo))
+		
+		listaPlantacionsActual = LlegirFitxerPlantacions(); // Se añade todo bien menos la lista de plantas que depende
+															// de un tipus terreny
+
+		// comprobacion que se carga bien desde los archivos
+		System.out.println("\n" + listaPlantesActual.toString());
+		System.out.println(listaTipusTerrenyActual.toString());
+		System.out.println(listaPlantacionsActual.toString());
+		/*
+		 * //---------------------------------------------------------------------------
+		 * ---- // CREO LA PRIMERA VEZ EL CODIGO DE TERRENYACTUAL
+		 * 
+		 * //buscar arbol con nombre y devolver //buscar arbusto con nombre y devolver
+		 * 
+		 * LlistaPlantes plantas_terreno = new LlistaPlantes();
+		 * plantas_terreno.afegirPlanta(null); TipusTerreny nuevo_terreno = new
+		 * TipusTerreny(plantas_terreno, "CalcariSolana");
+		 * //---------------------------------------------------------------------------
+		 * ----
+		 */
 		any = demanaAnyValid(scanner);
-		listaPlantesActual = LlegirFitxerPlantes();
-		listaPlantacionsActual = LlegirFitxerPlantacions();
-		listaTipusTerrenyActual = LlegirFitxerTipusTerreny();
-
-		// PRIMERO LISTA PLANTAS
-		// LUEGO LISTA TERRENOS
-		// ULTIMO LISTA PLANTACIONES
-		// ORDEN DE AÑADIR DA IGUAL PORQUE NO SE RELACIONAN
-		// PLANTACION[] -> PLANTACION -> RODALS[] -> RODAL -> TIPUS TERRENY -> PLANTAS[]
-
 		do {
 			mostrarOpcions();
 			eleccio = demanaEleccioValida(scanner);
 
+			//hay un problema con el buffer al leer
+			
 			switch (eleccio) {
 			case 1:
 				// Carregar les dades dels fitxers
@@ -164,6 +190,21 @@ public class main {
 				bucle = false;
 				// Preguntar al usuario si quiere guardar los archivos (sobreescribiendo los
 				// antiguos)
+
+				if (listaPlantacionsActual != null || listaPlantesActual != null || listaTipusTerrenyActual != null) {
+					System.out.println("\nVols sobreescriure els arxius desats anterioment?");
+					System.out.println("[0] - Sí.");
+					System.out.println("[Qualsevol caràcter] - No.");
+					System.out.print("Elecció: ");
+					tria = scanner.next().charAt(0);
+					if (tria == '0') {
+						GuardarFitxer(scanner, listaTipusTerrenyActual);
+					} else {
+						System.out.println(" - No s'han sobreescrit les dades.");
+					}
+				} else {
+					System.out.println(" - No hi ha res que desar.");
+				}
 				break;
 			default:
 				System.out.println("Error!!! - Opció default.");
@@ -214,10 +255,15 @@ public class main {
 					// read next line
 					line = reader.readLine();
 				}
-				System.out.println(" - S'ha carregat l'arxiu de les plantes.");
+				if (listaPlantesActual != null) {
+					System.out.println(" - S'ha carregat l'arxiu de les plantes.");
+				} else {
+					System.out.println(" - No s'ha carregat el contingut de l'arxiu de les plantes.");
+				}
+
 				reader.close();
 			} else {
-				System.out.println("- No hi ha arxiu de plantes que cargar.");
+				System.out.println("- No hi ha arxiu de plantes que carregar.");
 			}
 		} catch (Exception e) {
 			System.out.println("!!! - Error al llegir el fitxer de les plantes: " + e);
@@ -225,62 +271,77 @@ public class main {
 		return listaPlantesActual;
 	}
 
+	public static ListaTipusTerreny LlegirFitxerTipusTerreny() {
+		ListaTipusTerreny listaTipusTerrenyActual = new ListaTipusTerreny();
+		try {
+			File archivoTerrenys = new File("terrenys.dat");
+			if (archivoTerrenys.exists()) {
+
+				// Creo que con estas lineas ya esta
+
+				InputStream file = new FileInputStream("terrenys.dat");
+				InputStream buffer = new BufferedInputStream(file);
+				ObjectInput input = new ObjectInputStream(buffer);
+				listaTipusTerrenyActual = (ListaTipusTerreny) input.readObject();
+
+				if (listaTipusTerrenyActual != null) {
+					System.out.println(" - S'ha carregat l'arxiu dels terrenys.");
+				} else {
+					System.out.println(" - No s'ha carregat el contingut de l'arxiu dels terrenys.");
+				}
+			} else {
+				System.out.println("- No hi ha arxiu de terrenys que carregar.");
+			}
+		} catch (Exception e) {
+			System.out.println("!!! - Error al llegir el fitxer de les terrenys: " + e);
+		}
+		return listaTipusTerrenyActual;
+	}
+
 	public static ListaPlantacions LlegirFitxerPlantacions() {
 		ListaPlantacions listaPlantacionsActual = new ListaPlantacions();
 		try {
 			String line;
-			Plantacions plantacion_nueva;
 			Rodal rodal_nuevo;
 			Rodal[] array_rodal;
 			TipusTerreny terreny_nuevo;
 			File archivoPlantacions = new File("plantacions.txt");
-			// existe el archivo?
 			if (archivoPlantacions.exists()) {
 				BufferedReader reader = new BufferedReader(new FileReader("plantacions.txt"));
 				line = reader.readLine();
 				while (line != null) {
-					// PRIMERO LISTA PLANTAS
-					// LUEGO LISTA TERRENOS
-					// ULTIMO LISTA PLANTACIONES
-					// ORDEN DE AÑADIR DA IGUAL PORQUE NO SE RELACIONAN
-					// PLANTACION[] -> PLANTACION -> RODALS[] -> RODAL -> TIPUS TERRENY -> PLANTAS[]
+					array_rodal = new Rodal[Integer.valueOf(line.split(";")[2])];
+					int contador_co2 = 4;
+					int contador_nom_terreny = 3;
+					for (int i = 0; i < array_rodal.length; i++) {
 
-					Planta[] arrayPlanta = new Planta[5];
-					Planta planta_aux = new Arbust(100, 1, "NomArbust", 50);
-					arrayPlanta[0] = planta_aux;
-					arrayPlanta[1] = planta_aux;
-					arrayPlanta[2] = planta_aux;
-					arrayPlanta[3] = planta_aux;
-					arrayPlanta[4] = planta_aux;
+						String nom_terreny = line.split(";")[contador_nom_terreny];
 
-					// array
+						// METODO QUE LE PASO UN NOM_TERRENY Y ME DEVUELVE SU LISTA DE PLANTAS
+						LlistaPlantes a = null;
 
-					/*
-					 * terreny_nuevo = new TipusTerreny(arrayPlanta, line.split(";")[2]);
-					 * rodal_nuevo = new Rodal(terreny_nuevo, 2);
-					 * 
-					 * // array_rodal = new Rodal[Integer.valueOf(line.split(";")[2])]; array_rodal
-					 * = new Rodal[10];
-					 * 
-					 * array_rodal[0] = rodal_nuevo; array_rodal[1] = rodal_nuevo; array_rodal[2] =
-					 * rodal_nuevo; array_rodal[3] = rodal_nuevo; array_rodal[4] = rodal_nuevo;
-					 * array_rodal[5] = rodal_nuevo; array_rodal[6] = rodal_nuevo; array_rodal[7] =
-					 * rodal_nuevo; array_rodal[8] = rodal_nuevo; array_rodal[9] = rodal_nuevo; //
-					 * rodal deberia ser un array de rodals
-					 * 
-					 * plantacion_nueva = new Plantacions(line.split(";")[0],
-					 * Integer.valueOf(line.split(";")[1]), array_rodal);
-					 * listaPlantacionsActual.afegirPlantacions(plantacion_nueva);
-					 * 
-					 */
-					// System.out.println(listaPlantacionsActual.toString());
+						terreny_nuevo = new TipusTerreny(a, nom_terreny);
+						contador_nom_terreny += 2;
+						rodal_nuevo = new Rodal(terreny_nuevo, Float.valueOf(line.split(";")[contador_co2]));
+						contador_co2 += 2;
+						array_rodal[i] = rodal_nuevo;
+					}
 
+					// imprimir array rodal para ver que se ha guardado
+
+					listaPlantacionsActual.afegirPlantacions(
+							new Plantacions(line.split(";")[0], Integer.valueOf(line.split(";")[1]), array_rodal));
 					// read next line
 					line = reader.readLine();
 				}
-				System.out.println(" - S'ha carregat l'arxiu de les plantacions.");
+				reader.close();
+				if (listaPlantacionsActual != null) {
+					System.out.println(" - S'ha carregat l'arxiu de les plantacions.");
+				} else {
+					System.out.println(" - No s'ha carregat el contingut de l'arxiu de les plantacions.");
+				}
 			} else {
-				System.out.println("- No hi ha arxiu de plantacions que cargar.");
+				System.out.println("- No hi ha arxiu de plantacions que carregar.");
 			}
 
 		} catch (Exception e) {
@@ -289,56 +350,22 @@ public class main {
 		return listaPlantacionsActual;
 	}
 
-	public static ListaTipusTerreny LlegirFitxerTipusTerreny() {
-		ListaTipusTerreny listaTipusTerrenyActual = new ListaTipusTerreny();
-		try {
-			String line;
-			File archivoTerrenys = new File("terrenys.dat");
-			if (archivoTerrenys.exists()) {
-				BufferedReader reader = new BufferedReader(new FileReader("terrenys.dat"));
-				line = reader.readLine();
-				while (line != null) {
-					// read next line
-					line = reader.readLine();
-				}
-				System.out.println(" - S'ha carregat l'arxiu de les terrenys.");
-				reader.close();
-			} else {
-				System.out.println("- No hi ha arxiu de terrenys que cargar.");
-			}
-		} catch (Exception e) {
-			System.out.println("!!! - Error al llegir el fitxer de les terrenys: " + e);
-		}
-		return listaTipusTerrenyActual;
-	}
-
 	// GUARDAR DATOS
-	public static void GuardarFitxer(Scanner scanner) {
+	public static void GuardarFitxer(Scanner scanner, ListaTipusTerreny listaTipusTerrenyActual) {
 		try {
-			char tria;
-			// existe el archivo?
-			// si
-			// sobreescribir datos
-			// no
-			// crear archivo y guardar datos
-
-			// HACER EL SERIALIZABLE DE TIPUSTERRENY
 			File archivoPlantes = new File("plantes.txt");
 			File archivoPlantacions = new File("plantacions.txt");
 			File archivoTerrenys = new File("terrenys.dat");
 
-			if (!archivoTerrenys.exists()) {
-			} else {
-				System.out.println("Ja existeix un arxiu de Terrenys, el vols sobreescriure?.");
-				System.out.println("[0] - Sí.");
-				System.out.println("[Qualsevol Caràcter] - No.");
-				tria = scanner.next().charAt(0);
-				if (tria == '0') {
+			System.out.println("\nAUN NO SE SOBREESCRIBE - PLANTAS");
+			System.out.println("AUN NO SE SOBREESCRIBE - PLANTACIONS");
 
-				} else {
-					System.out.println(" - No s'ha guardat l'arxiu de terrenys.");
-				}
-			}
+			// Guardar terrenys.dat (Serializado)
+			FileOutputStream fout = new FileOutputStream("terrenys.dat");
+			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			oos.writeObject(listaTipusTerrenyActual);
+			System.out.println("SE HA SOBREESCRITO EL ARCHIVO 'terrenys.dat' SERIALIZADO");
+
 		} catch (Exception e) {
 			System.out.println("!!! - Error al guardar el fitxer: " + e);
 		}
@@ -388,7 +415,7 @@ public class main {
 	private static int demanaAnyValid(Scanner scanner) {
 		int any = -1;
 		do {
-			System.out.print("En quin any estem? ");
+			System.out.print("\nEn quin any estem? ");
 			try {
 				any = scanner.nextInt();
 				if (any < 0) {

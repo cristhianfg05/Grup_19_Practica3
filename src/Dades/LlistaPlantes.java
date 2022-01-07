@@ -31,7 +31,7 @@ public class LlistaPlantes {
 	public void setNumPlantes(int numPlantes) {
 		this.numPlantes = numPlantes;
 	}
-
+	
 	public void afegirPlanta(Planta p) {
 		if (this.numPlantes >= this.lista.length) {
 			Planta[] listaAux = new Planta[this.numPlantes + 5];

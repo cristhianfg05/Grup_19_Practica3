@@ -1,8 +1,9 @@
 package Dades;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class ListaTipusTerreny {
+public class ListaTipusTerreny implements Serializable{
 	private TipusTerreny[] lista;
 	private int NumTerreny;
 	
@@ -42,8 +43,5 @@ public class ListaTipusTerreny {
 		}
 		return frase;
 		
-	}
-	
-	
-	
+	}	
 }

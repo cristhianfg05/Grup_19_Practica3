@@ -1,9 +1,15 @@
 package Dades;
 
 public class Rodal {
-	private TipusTerreny tipus;
-	private double superficie;
 
+	private TipusTerreny tipus;
+	private float superficie;
+
+	public Rodal(TipusTerreny tipus, float superficie) {
+		this.tipus = tipus;
+		this.superficie = superficie;
+	}	
+	
 	public TipusTerreny getTipus() {
 		return tipus;
 	}
@@ -16,7 +22,7 @@ public class Rodal {
 		return superficie;
 	}
 
-	public void setSuperficie(double superficie) {
+	public void setSuperficie(float superficie) {
 		this.superficie = superficie;
 	}
 
@@ -28,5 +34,12 @@ public class Rodal {
 		}
 		return quantitat;
 	}
+
+	@Override
+	public String toString() {
+		return "Rodal [tipus=" + tipus + ", superficie=" + superficie + "]";
+	}
+	
+	
 
 }
