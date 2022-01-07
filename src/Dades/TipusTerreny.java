@@ -2,21 +2,21 @@ package Dades;
 
 public class TipusTerreny {
 	private String nom;
-	private Planta[] listaplantas;
+	private LlistaPlantes listaplantas;
 	// faltaria algo para poner las unidades plantadas por hectarea
 
-	public TipusTerreny(Planta listaplantas, String nom) {
+	public TipusTerreny(LlistaPlantes listaplantas, String nom) {
 		super();
 		this.nom=nom;
-		this.listaplantas = new Planta[5];			// asi hacemos que solo haya 5 tipos de Plantas
-		this.listaplantas[0] = listaplantas;		
+		this.listaplantas = new LlistaPlantes(5);			// asi hacemos que solo haya 5 tipos de Plantas
+		this.listaplantas = listaplantas;		
 	}
 
-	public Planta[] getListaplantas() {
+	public LlistaPlantes getListaplantas() {
 		return listaplantas;
 	}
 
-	public void setListaplantas(Planta[] listaplantas) {
+	public void setListaplantas(LlistaPlantes listaplantas) {
 		this.listaplantas = listaplantas;
 	}
 
