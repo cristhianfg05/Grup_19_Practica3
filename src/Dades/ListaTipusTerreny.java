@@ -33,6 +33,16 @@ public class ListaTipusTerreny {
 		return "ListaTipusTerreny [lista=" + Arrays.toString(lista) + ", NumTerreny=" + NumTerreny + "]";
 	}
 	
+	public String plantacionsTipusTerreny (Rodal rodal) {
+		String frase = ""; 
+		for (int i = 0; i < lista.length; i++) {
+			if (lista[i].getNom().equalsIgnoreCase(rodal.getTipus().getNom())) {
+				frase += "ListaTipusTerreny [lista=" + Arrays.toString(lista) + ", NumTerreny=" + NumTerreny + "]";
+			}
+		}
+		return frase;
+		
+	}
 	
 	
 	

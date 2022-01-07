@@ -37,5 +37,9 @@ public class Plantacions {
 		return "Plantacions -> Nom: " + nom + ", Any: " + any + ", Rodals-> " + Arrays.toString(rodals);
 	}
 	
+	public Plantacions copia() {
+		Plantacions plant= new Plantacions(nom, any, rodals);
+		return plant;
+	}
 	
 }

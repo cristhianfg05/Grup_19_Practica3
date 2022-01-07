@@ -10,12 +10,12 @@ public class LlistaPlantes {
 		this.lista = new Planta[2];
 		this.numPlantes = 0;
 	}
-	
+
 	public LlistaPlantes(int dim) {
         this.lista = new Planta[dim];
         this.numPlantes = 0;
     }
-
+	
 	public Planta[] getLista() {
 		return lista;
 	}
@@ -42,7 +42,7 @@ public class LlistaPlantes {
 		}
 		this.lista[numPlantes] = p;
 		numPlantes++;
-		//ordenarListaQuickSort(lista, 0, numPlantes-1);
+		ordenarListaQuickSort(lista, 0, numPlantes-1);
 	}
 
 	private void ordenarListaQuickSort(Planta[] listaP, int izq, int der) {

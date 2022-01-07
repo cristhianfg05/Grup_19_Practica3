@@ -7,8 +7,8 @@ public class Arbre extends Planta {
 	private float[] rangs; 
 	private int edatactual;
 
-	public Arbre(String nom, float[] rangs, int edatactual) {
-		super(nom);
+	public Arbre(String nom,int numPlantes, float[] rangs, int edatactual) {
+		super(nom, numPlantes);
 		this.rangs = rangs;
 		this.edatactual = edatactual;
 	}
@@ -31,14 +31,19 @@ public class Arbre extends Planta {
 	}
 	
 	public Planta copia() {
-		return new Arbre(this.getNom(),this.rangs,this.edatactual);
+		return new Arbre(this.getNom(),this.getNumPlantes(),this.rangs,this.edatactual);
 	}
+
+	
 
 	@Override
 	public String toString() {
 		return "Arbre [rangs=" + Arrays.toString(rangs) + ", edatactual=" + edatactual + "]";
 	}
 
+	public float getAbsorcioCO2() {
+		return rangs[edatactual];
+	}
 	
 	
 	
