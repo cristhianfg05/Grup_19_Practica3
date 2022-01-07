@@ -37,11 +37,11 @@ public class main {
 		LlistaPlantes listaPlantesActual = new LlistaPlantes();
 
 		listaPlantesActual = LlegirFitxerPlantes(); // listaPlantesActual se añade OK
-		
+
 		listaTipusTerrenyActual = LlegirFitxerTipusTerreny(); // Hay que crear el objeto terreny a mano (faltan metodos
 																// para hacerlo (el buscar arbusto/arbol de listaPlantas
 																// x ejemplo))
-		
+
 		listaPlantacionsActual = LlegirFitxerPlantacions(); // Se añade todo bien menos la lista de plantas que depende
 															// de un tipus terreny
 
@@ -66,8 +66,8 @@ public class main {
 			mostrarOpcions();
 			eleccio = demanaEleccioValida(scanner);
 
-			//hay un problema con el buffer al leer
-			
+			// hay un problema con el buffer al leer (cuando pide leer por teclado no deja)
+
 			switch (eleccio) {
 			case 1:
 				// Carregar les dades dels fitxers
@@ -101,9 +101,11 @@ public class main {
 						}
 						i++;
 					}
+
 					if (!trobat) {
 						System.out.println(" - No s'ha trobat cap plantació amb el nom: " + text);
 					}
+
 				} catch (Exception e) {
 					System.out.println(" - Error al intentar cambiar l'any de la plantació.");
 				}
@@ -421,6 +423,9 @@ public class main {
 				if (any < 0) {
 					System.out.println(" - Introdueix un any vàlid (no negatiu).\n");
 				}
+
+			} catch (NumberFormatException e) {
+				System.out.println(" - Error en la dada introduida.");
 			} catch (Exception e) {
 				System.out.println(" - Error! Introdueix un any vàlid.\n");
 				scanner.next();

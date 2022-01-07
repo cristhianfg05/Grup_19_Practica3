@@ -34,10 +34,10 @@ public class ListaTipusTerreny implements Serializable{
 		return "ListaTipusTerreny [lista=" + Arrays.toString(lista) + ", NumTerreny=" + NumTerreny + "]";
 	}
 	
-	public String plantacionsTipusTerreny (Rodal rodal) {
+	public String plantacionsTipusTerreny (String nom) {
 		String frase = ""; 
 		for (int i = 0; i < lista.length; i++) {
-			if (lista[i].getNom().equalsIgnoreCase(rodal.getTipus().getNom())) {
+			if (lista[i].getNom().equalsIgnoreCase(nom)) {
 				frase += "ListaTipusTerreny [lista=" + Arrays.toString(lista) + ", NumTerreny=" + NumTerreny + "]";
 			}
 		}
