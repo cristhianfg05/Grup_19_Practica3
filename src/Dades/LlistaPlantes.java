@@ -12,10 +12,10 @@ public class LlistaPlantes {
 	}
 
 	public LlistaPlantes(int dim) {
-        this.lista = new Planta[dim];
-        this.numPlantes = 0;
-    }
-	
+		this.lista = new Planta[dim];
+		this.numPlantes = 0;
+	}
+
 	public Planta[] getLista() {
 		return lista;
 	}
@@ -31,7 +31,7 @@ public class LlistaPlantes {
 	public void setNumPlantes(int numPlantes) {
 		this.numPlantes = numPlantes;
 	}
-	
+
 	public void afegirPlanta(Planta p) {
 		if (this.numPlantes >= this.lista.length) {
 			Planta[] listaAux = new Planta[this.numPlantes + 5];
@@ -42,7 +42,7 @@ public class LlistaPlantes {
 		}
 		this.lista[numPlantes] = p;
 		numPlantes++;
-		ordenarListaQuickSort(lista, 0, numPlantes-1);
+		ordenarListaQuickSort(lista, 0, numPlantes - 1);
 	}
 
 	private void ordenarListaQuickSort(Planta[] listaP, int izq, int der) {
@@ -67,18 +67,32 @@ public class LlistaPlantes {
 
 		listaP[izq] = listaP[j].copia();
 		listaP[j] = pivote.copia();
-		
+
 		if (izq < j - 1)
 			ordenarListaQuickSort(listaP, izq, j - 1);
 		if (j + 1 < der)
 			ordenarListaQuickSort(listaP, j + 1, der);
 	}
 
+	public Planta buscarPlanta(String nom) {
+		boolean trobat = false;
+		int i = 0;
+		Planta aux = null;
+		while (i < lista.length && !trobat) {
+			if (lista[i].getNom().equalsIgnoreCase(nom)) {
+				trobat = true;
+				aux = lista[i];
+			}
+			i++;
+		}
+		return aux;
+	}
+
 	@Override
 	public String toString() {
 		return "LlistaPlantes [lista=" + Arrays.toString(lista) + ", numPlantes=" + numPlantes + "]";
 	}
-	
-	//METODO DEVOLVER CO2 A PARTIR DE NOMBRE ESPECIE Y EDAT
-	
+
+	// METODO DEVOLVER CO2 A PARTIR DE NOMBRE ESPECIE Y EDAT
+
 }

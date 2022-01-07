@@ -14,8 +14,10 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
@@ -26,7 +28,7 @@ public class main {
 
 	// ORGANIZAR MAIN EN METODOS SEPARADOS
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Scanner scanner = new Scanner(System.in);
 		int eleccio = -1, any, i, aux;
 		boolean trobat, bucle = true;
@@ -42,25 +44,44 @@ public class main {
 																// para hacerlo (el buscar arbusto/arbol de listaPlantas
 																// x ejemplo))
 
-		listaPlantacionsActual = LlegirFitxerPlantacions(); // Se añade todo bien menos la lista de plantas que depende
-															// de un tipus terreny
+		// de un tipus terreny
 
 		// comprobacion que se carga bien desde los archivos
+
+		// ---------------------------------------------------------------------------
+		// CREO LA PRIMERA VEZ EL CODIGO DE TERRENYACTUAL
+
+		// buscar arbol con nombre y devolver //buscar arbusto con nombre y devolver
+
+		LlistaPlantes plantas_terreno = new LlistaPlantes();
+		TipusTerreny nuevo_terreno;
+		
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Pinus sylvestris"));
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Pinus nigra"));
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Fraxinus excelsior"));
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Acer pseudoplatanus"));
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Populus nigra"));		
+		nuevo_terreno = new TipusTerreny(plantas_terreno, "CalcariSolana");		
+		listaTipusTerrenyActual.afegirTerreny(nuevo_terreno);
+		
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Pinus sylvestris"));
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Corylus Avellana"));
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Spartium junceum"));
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Quercus ilex"));
+		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Betula alba"));		
+		nuevo_terreno = new TipusTerreny(plantas_terreno, "CalcariSolana");		
+		listaTipusTerrenyActual.afegirTerreny(nuevo_terreno);
+					
+		//---------------------------
+
+
+		listaPlantacionsActual = LlegirFitxerPlantacions(listaTipusTerrenyActual); // Se añade todo bien menos la lista
+																					// de plantas que depende
 		System.out.println("\n" + listaPlantesActual.toString());
 		System.out.println(listaTipusTerrenyActual.toString());
 		System.out.println(listaPlantacionsActual.toString());
-		/*
-		 * //---------------------------------------------------------------------------
-		 * ---- // CREO LA PRIMERA VEZ EL CODIGO DE TERRENYACTUAL
-		 * 
-		 * //buscar arbol con nombre y devolver //buscar arbusto con nombre y devolver
-		 * 
-		 * LlistaPlantes plantas_terreno = new LlistaPlantes();
-		 * plantas_terreno.afegirPlanta(null); TipusTerreny nuevo_terreno = new
-		 * TipusTerreny(plantas_terreno, "CalcariSolana");
-		 * //---------------------------------------------------------------------------
-		 * ----
-		 */
+		
+		
 		any = demanaAnyValid(scanner);
 		do {
 			mostrarOpcions();
@@ -200,7 +221,7 @@ public class main {
 					System.out.print("Elecció: ");
 					tria = scanner.next().charAt(0);
 					if (tria == '0') {
-						GuardarFitxer(scanner, listaTipusTerrenyActual);
+						GuardarFitxer(scanner, listaTipusTerrenyActual, listaPlantacionsActual, listaPlantesActual);
 					} else {
 						System.out.println(" - No s'han sobreescrit les dades.");
 					}
@@ -280,12 +301,12 @@ public class main {
 			if (archivoTerrenys.exists()) {
 
 				// Creo que con estas lineas ya esta
-
+/*
 				InputStream file = new FileInputStream("terrenys.dat");
 				InputStream buffer = new BufferedInputStream(file);
 				ObjectInput input = new ObjectInputStream(buffer);
 				listaTipusTerrenyActual = (ListaTipusTerreny) input.readObject();
-
+*/
 				if (listaTipusTerrenyActual != null) {
 					System.out.println(" - S'ha carregat l'arxiu dels terrenys.");
 				} else {
@@ -300,9 +321,9 @@ public class main {
 		return listaTipusTerrenyActual;
 	}
 
-	public static ListaPlantacions LlegirFitxerPlantacions() {
+	public static ListaPlantacions LlegirFitxerPlantacions(ListaTipusTerreny listaTipusTerrenyActual) throws IOException {
 		ListaPlantacions listaPlantacionsActual = new ListaPlantacions();
-		try {
+		//try {
 			String line;
 			Rodal rodal_nuevo;
 			Rodal[] array_rodal;
@@ -320,7 +341,8 @@ public class main {
 						String nom_terreny = line.split(";")[contador_nom_terreny];
 
 						// METODO QUE LE PASO UN NOM_TERRENY Y ME DEVUELVE SU LISTA DE PLANTAS
-						LlistaPlantes a = null;
+
+						LlistaPlantes a = listaTipusTerrenyActual.plantacionsTipusTerreny(nom_terreny);
 
 						terreny_nuevo = new TipusTerreny(a, nom_terreny);
 						contador_nom_terreny += 2;
@@ -346,14 +368,14 @@ public class main {
 				System.out.println("- No hi ha arxiu de plantacions que carregar.");
 			}
 
-		} catch (Exception e) {
-			System.out.println("!!! - Error al llegir el fitxer de les plantacions: " + e);
-		}
+		//} catch (Exception e) {
+		//	System.out.println("!!! - Error al llegir el fitxer de les plantacions: " + e);
+		//}
 		return listaPlantacionsActual;
 	}
 
 	// GUARDAR DATOS
-	public static void GuardarFitxer(Scanner scanner, ListaTipusTerreny listaTipusTerrenyActual) {
+	public static void GuardarFitxer(Scanner scanner, ListaTipusTerreny listaTipusTerrenyActual, ListaPlantacions listaPlantacionsActual, LlistaPlantes listaPlantesActual) {
 		try {
 			File archivoPlantes = new File("plantes.txt");
 			File archivoPlantacions = new File("plantacions.txt");
@@ -366,8 +388,8 @@ public class main {
 			FileOutputStream fout = new FileOutputStream("terrenys.dat");
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(listaTipusTerrenyActual);
+			
 			System.out.println("SE HA SOBREESCRITO EL ARCHIVO 'terrenys.dat' SERIALIZADO");
-
 		} catch (Exception e) {
 			System.out.println("!!! - Error al guardar el fitxer: " + e);
 		}
@@ -406,9 +428,10 @@ public class main {
 				if (eleccio < 0) {
 					System.out.println(" - Introdueix una opció vàlida.\n");
 				}
+			} catch (NumberFormatException e) {
+				System.out.println(" - Error! Has d'introduir un valor numèric " + e + "\n");
 			} catch (Exception e) {
-				System.out.println(" - Error! Introdueix una opció vàlida.\n");
-				scanner.next();
+				System.out.println(" - Error! Introdueix una opció vàlida " + e);
 			}
 		} while (eleccio < 0 || eleccio > 15);
 		return eleccio;
@@ -416,23 +439,22 @@ public class main {
 
 	private static int demanaAnyValid(Scanner scanner) {
 		int any = -1;
+		System.out.println();
 		do {
-			System.out.print("\nEn quin any estem? ");
+			System.out.print("En quin any estem? ");
 			try {
-				any = scanner.nextInt();
+				any = Integer.parseInt(scanner.nextLine());
 				if (any < 0) {
-					System.out.println(" - Introdueix un any vàlid (no negatiu).\n");
+					System.out.println(" - Introdueix un any vàlid (no pot ser negatiu).\n");
 				}
 
 			} catch (NumberFormatException e) {
-				System.out.println(" - Error en la dada introduida.");
+				System.out.println(" - Error! Has d'introduir un valor numèric " + e + "\n");
 			} catch (Exception e) {
-				System.out.println(" - Error! Introdueix un any vàlid.\n");
-				scanner.next();
+				System.out.println(" - Error! Introdueix un any vàlid " + e);
 			}
 
 		} while (any < 0);
 		return any;
 	}
-
 }

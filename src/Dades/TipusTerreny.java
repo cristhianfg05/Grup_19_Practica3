@@ -3,6 +3,7 @@ package Dades;
 public class TipusTerreny {
 	private String nom;
 	private LlistaPlantes listaplantas;
+	
 	// faltaria algo para poner las unidades plantadas por hectarea
 
 	public TipusTerreny(LlistaPlantes listaplantas, String nom) {

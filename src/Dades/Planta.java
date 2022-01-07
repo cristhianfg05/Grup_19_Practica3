@@ -2,19 +2,19 @@ package Dades;
 
 public abstract class Planta { // es abstract porque no se pueden crear plantas directamente
 	private String nom;
-	private int numPlantes;
+	private int PlantesPerHra;
 
-	public Planta(String nom, int numPlantes) {
+	public Planta(String nom, int PlantesPerHra) {
 		this.nom = nom;
-		this.numPlantes = numPlantes;
+		this.PlantesPerHra = PlantesPerHra;
 	}
 
 	public int getNumPlantes() {
-		return numPlantes;
+		return PlantesPerHra;
 	}
 
 	public void setNumPlantes(int numPlantes) {
-		this.numPlantes = numPlantes;
+		this.PlantesPerHra = numPlantes;
 	}
 
 	public String getNom() {
@@ -30,9 +30,6 @@ public abstract class Planta { // es abstract porque no se pueden crear plantas 
 
 	@Override
 	public String toString() {
-		return "Planta [nom=" + nom + ", numPlantes=" + numPlantes + "]";
+		return "Planta [nom=" + nom + ", numPlantes=" + PlantesPerHra + "]";
 	}
-
-	
-
 }
