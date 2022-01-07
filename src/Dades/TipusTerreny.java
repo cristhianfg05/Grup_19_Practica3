@@ -8,7 +8,7 @@ public class TipusTerreny {
 	public TipusTerreny(LlistaPlantes listaplantas, String nom) {
 		super();
 		this.nom=nom;
-		this.listaplantas = new LlistaPlantes(5);			// asi hacemos que solo haya 5 tipos de Plantas
+		this.listaplantas = new LlistaPlantes();			// asi hacemos que solo haya 5 tipos de Plantas
 		this.listaplantas = listaplantas;		
 	}
 

@@ -2,19 +2,21 @@ package Dades;
 
 public abstract class Planta { // es abstract porque no se pueden crear plantas directamente
 	private String nom;
-	private int numPlantesPlantades;
-	
-	public void setNumPlantesPlanades (int num) {
-		this.numPlantesPlantades = num;
-	}
-	public int getNumPlantesPlantades () {
-		return this.numPlantesPlantades;
-	}
-	public Planta(String nom, int num) {
+	private int numPlantes;
+
+	public Planta(String nom, int numPlantes) {
 		this.nom = nom;
-		this.numPlantesPlantades = num;
+		this.numPlantes = numPlantes;
 	}
-	
+
+	public int getNumPlantes() {
+		return numPlantes;
+	}
+
+	public void setNumPlantes(int numPlantes) {
+		this.numPlantes = numPlantes;
+	}
+
 	public String getNom() {
 		return nom;
 	}
@@ -24,13 +26,13 @@ public abstract class Planta { // es abstract porque no se pueden crear plantas 
 	}
 
 	protected abstract Planta copia();
-
+	
+	protected abstract float getAbsorcioCO2();
 	@Override
 	public String toString() {
-		return "Planta [nom=" + nom + "]";
+		return "Planta [nom=" + nom + ", numPlantes=" + numPlantes + "]";
 	}
 
-	protected abstract float getAbsorcioCO2();
 	
 
 }

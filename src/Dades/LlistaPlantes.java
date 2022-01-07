@@ -6,10 +6,6 @@ public class LlistaPlantes {
 	private Planta[] lista;
 	private int numPlantes;
 
-	public LlistaPlantes (int dim) {
-		this.lista = new Planta[dim];
-		this.numPlantes = 0;
-	}
 	public LlistaPlantes() {
 		this.lista = new Planta[2];
 		this.numPlantes = 0;
@@ -78,6 +74,6 @@ public class LlistaPlantes {
 		return "LlistaPlantes [lista=" + Arrays.toString(lista) + ", numPlantes=" + numPlantes + "]";
 	}
 	
-	
+	//METODO DEVOLVER CO2 A PARTIR DE NOMBRE ESPECIE Y EDAT
 	
 }
