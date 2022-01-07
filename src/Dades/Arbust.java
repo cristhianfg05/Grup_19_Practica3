@@ -5,8 +5,8 @@ public class Arbust extends Planta {
 	private int edatMaxima;
 	private float absorcioCO2;
 
-	public Arbust(int edatMaxima, String nom, float absCO2) {
-		super(nom);
+	public Arbust(int edatMaxima,int numPlantes, String nom, float absCO2) {
+		super(nom, numPlantes);
 		this.edatMaxima = edatMaxima;
 		this.absorcioCO2 = absCO2;
 	}
@@ -28,7 +28,7 @@ public class Arbust extends Planta {
 	}
 	
 	public Planta copia() {
-		return new Arbust(this.edatMaxima,this.getNom(),this.absorcioCO2);
+		return new Arbust(this.edatMaxima,this.getNumPlantes(),this.getNom(),this.absorcioCO2);
 	}
 
 	@Override
