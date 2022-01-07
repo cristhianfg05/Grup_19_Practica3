@@ -8,7 +8,7 @@ public class TipusTerreny {
 	public TipusTerreny(LlistaPlantes listaplantas, String nom) {
 		super();
 		this.nom=nom;
-		this.listaplantas = new LlistaPlantes();			// asi hacemos que solo haya 5 tipos de Plantas
+		this.listaplantas = listaplantas;			// asi hacemos que solo haya 5 tipos de Plantas
 	}
 
 	public LlistaPlantes getListaplantas() {
@@ -25,6 +25,11 @@ public class TipusTerreny {
 
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+
+	@Override
+	public String toString() {
+		return "TipusTerreny [nom=" + nom + " listaplantas=" + listaplantas + "]";
 	}
 	
 	
