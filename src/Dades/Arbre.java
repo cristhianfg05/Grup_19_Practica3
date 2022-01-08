@@ -1,14 +1,15 @@
 package Dades;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Arbre extends Planta {
+public class Arbre extends Planta implements Serializable{
 	
 	private float[] rangs; 
 	private int edatactual;
 
-	public Arbre(String nom,int numPlantes, float[] rangs, int edatactual) {
-		super(nom, numPlantes);
+	public Arbre(String nom, float[] rangs, int edatactual) {
+		super(nom);
 		this.rangs = rangs;
 		this.edatactual = edatactual;
 	}
@@ -31,10 +32,8 @@ public class Arbre extends Planta {
 	}
 	
 	public Planta copia() {
-		return new Arbre(this.getNom(),this.getNumPlantes(),this.rangs,this.edatactual);
+		return new Arbre(this.getNom(),this.rangs,this.edatactual);
 	}
-
-	
 
 	@Override
 	public String toString() {

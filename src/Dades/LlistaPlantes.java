@@ -1,8 +1,9 @@
 package Dades;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class LlistaPlantes {
+public class LlistaPlantes implements Serializable{
 	private Planta[] lista;
 	private int numPlantes;
 

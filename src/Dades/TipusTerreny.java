@@ -1,6 +1,8 @@
 package Dades;
 
-public class TipusTerreny {
+import java.io.Serializable;
+
+public class TipusTerreny implements Serializable{
 	private String nom;
 	private LlistaPlantes listaplantas;
 	

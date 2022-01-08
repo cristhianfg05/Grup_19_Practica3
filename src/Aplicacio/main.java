@@ -52,7 +52,7 @@ public class main {
 		// CREO LA PRIMERA VEZ EL CODIGO DE TERRENYACTUAL
 
 		// buscar arbol con nombre y devolver //buscar arbusto con nombre y devolver
-
+/*
 		LlistaPlantes plantas_terreno = new LlistaPlantes();
 		TipusTerreny nuevo_terreno;
 		
@@ -71,11 +71,11 @@ public class main {
 		plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Betula alba"));		
 		nuevo_terreno = new TipusTerreny(plantas_terreno, "CalcariSolana");		
 		listaTipusTerrenyActual.afegirTerreny(nuevo_terreno);
-					
+*/				
 		//---------------------------
 
 
-		listaPlantacionsActual = LlegirFitxerPlantacions(listaTipusTerrenyActual); // Se añade todo bien menos la lista
+		//listaPlantacionsActual = LlegirFitxerPlantacions(listaTipusTerrenyActual); // Se añade todo bien menos la lista
 																					// de plantas que depende
 		System.out.println("\n" + listaPlantesActual.toString());
 		System.out.println(listaTipusTerrenyActual.toString());
@@ -267,11 +267,11 @@ public class main {
 							c++;
 						}
 						// hay que añadir el nuevo parametro numPlantes (cambiar el 0 por ese valor)
-						arbol_nuevo = new Arbre(line.split(";")[1], 0, rang, Integer.valueOf(line.split(";")[2]));
+						arbol_nuevo = new Arbre(line.split(";")[1], rang, Integer.valueOf(line.split(";")[2]));
 						listaPlantesActual.afegirPlanta(arbol_nuevo);
 					} else {
 						// 1 = arbusto
-						arbusto_nuevo = new Arbust(Integer.valueOf(line.split(";")[2]), 0, line.split(";")[1],
+						arbusto_nuevo = new Arbust(Integer.valueOf(line.split(";")[2]), line.split(";")[1],
 								Float.valueOf(line.split(";")[3]));
 						listaPlantesActual.afegirPlanta(arbusto_nuevo);
 					}
@@ -301,12 +301,12 @@ public class main {
 			if (archivoTerrenys.exists()) {
 
 				// Creo que con estas lineas ya esta
-/*
-				InputStream file = new FileInputStream("terrenys.dat");
-				InputStream buffer = new BufferedInputStream(file);
-				ObjectInput input = new ObjectInputStream(buffer);
-				listaTipusTerrenyActual = (ListaTipusTerreny) input.readObject();
-*/
+
+				FileInputStream fis = new FileInputStream("terrenys.dat");
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				listaTipusTerrenyActual = (ListaTipusTerreny) ois.readObject();
+				ois.close();
+				
 				if (listaTipusTerrenyActual != null) {
 					System.out.println(" - S'ha carregat l'arxiu dels terrenys.");
 				} else {
@@ -388,6 +388,7 @@ public class main {
 			FileOutputStream fout = new FileOutputStream("terrenys.dat");
 			ObjectOutputStream oos = new ObjectOutputStream(fout);
 			oos.writeObject(listaTipusTerrenyActual);
+			oos.close();
 			
 			System.out.println("SE HA SOBREESCRITO EL ARCHIVO 'terrenys.dat' SERIALIZADO");
 		} catch (Exception e) {

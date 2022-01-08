@@ -26,7 +26,7 @@ public class ListaTipusTerreny implements Serializable {
 	}
 
 	public void setNumTerreny(int numTerreny) {
-		numTerreny = numTerreny;
+		this.numTerreny = numTerreny;
 	}
 
 	public LlistaPlantes plantacionsTipusTerreny(String nom) {
