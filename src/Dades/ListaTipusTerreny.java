@@ -41,18 +41,32 @@ public class ListaTipusTerreny implements Serializable {
 		}
 		return aux;
 	}
-	
+
+	public int[] HraTipusTerreny(String nom) {
+		boolean trobat = false;
+		int i = 0;
+		int[] unitatsHra = null;
+		while (i < lista.length && !trobat) {
+			if (lista[i].getNom().equalsIgnoreCase(nom)) {
+				unitatsHra = lista[i].getUnitatsHra();
+				trobat = true;
+			}
+			i++;
+		}
+		return unitatsHra;
+	}
+
 	public void afegirTerreny(TipusTerreny p) {
-        if (this.numTerreny >= this.lista.length) {
-            TipusTerreny[] listaAux = new TipusTerreny[this.numTerreny + 1];
-            for (int i = 0; i < this.numTerreny; i++) {
-                listaAux[i] = this.lista[i];
-            }
-            this.lista = listaAux;
-        }
-        this.lista[numTerreny] = p;
-        numTerreny++;
-    }
+		if (this.numTerreny >= this.lista.length) {
+			TipusTerreny[] listaAux = new TipusTerreny[this.numTerreny + 1];
+			for (int i = 0; i < this.numTerreny; i++) {
+				listaAux[i] = this.lista[i];
+			}
+			this.lista = listaAux;
+		}
+		this.lista[numTerreny] = p;
+		numTerreny++;
+	}
 
 	@Override
 	public String toString() {

@@ -24,6 +24,7 @@ import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class main {
@@ -43,8 +44,9 @@ public class main {
 		listaTipusTerrenyActual = LlegirFitxerTipusTerreny(); // listaTipusTerrenyActual se añade OK (todo serializable)
 
 		/*
-		 * LlistaPlantes plantas_terreno = new LlistaPlantes(); TipusTerreny
-		 * nuevo_terreno;
+		 * LlistaPlantes plantas_terreno = new LlistaPlantes(); int[] unitatsHra1 = new
+		 * int[5]; int[] unitatsHra2 = new int[5]; int[] unitatsHra3 = new int[5];
+		 * TipusTerreny nuevo_terreno;
 		 * 
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.
 		 * buscarPlanta("Pinus sylvestris"));
@@ -54,7 +56,9 @@ public class main {
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.
 		 * buscarPlanta("Acer pseudoplatanus"));
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Populus nigra")
-		 * ); nuevo_terreno = new TipusTerreny(plantas_terreno, "CalcariSolana");
+		 * ); unitatsHra1[0] = 150; unitatsHra1[1] = 130; unitatsHra1[2] = 220;
+		 * unitatsHra1[3] = 210; unitatsHra1[4] = 190; nuevo_terreno = new
+		 * TipusTerreny(plantas_terreno, "CalcariSolana", unitatsHra1);
 		 * listaTipusTerrenyActual.afegirTerreny(nuevo_terreno);
 		 * 
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.
@@ -66,7 +70,9 @@ public class main {
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Quercus ilex"))
 		 * ;
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Betula alba"));
-		 * nuevo_terreno = new TipusTerreny(plantas_terreno, "CalcariObaga");
+		 * unitatsHra2[0] = 190; unitatsHra2[1] = 200; unitatsHra2[2] = 150;
+		 * unitatsHra2[3] = 200; unitatsHra2[4] = 160; nuevo_terreno = new
+		 * TipusTerreny(plantas_terreno, "CalcariObaga", unitatsHra2);
 		 * listaTipusTerrenyActual.afegirTerreny(nuevo_terreno);
 		 * 
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.
@@ -78,17 +84,18 @@ public class main {
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Quercus ilex"))
 		 * ;
 		 * plantas_terreno.afegirPlanta(listaPlantesActual.buscarPlanta("Populus nigra")
-		 * ); nuevo_terreno = new TipusTerreny(plantas_terreno, "ArgilaSolana");
+		 * ); unitatsHra3[0] = 110; unitatsHra3[1] = 170; unitatsHra3[2] = 280;
+		 * unitatsHra3[3] = 100; unitatsHra3[4] = 130; nuevo_terreno = new
+		 * TipusTerreny(plantas_terreno, "ArgilaSolana", unitatsHra3);
 		 * listaTipusTerrenyActual.afegirTerreny(nuevo_terreno);
 		 */
 
 		listaPlantacionsActual = LlegirFitxerPlantacions(listaTipusTerrenyActual); // listaPlantacionsActual se añade OK
-
 		System.out.println("\n" + listaPlantesActual.toString());
 		System.out.println(listaTipusTerrenyActual.toString());
 		System.out.println(listaPlantacionsActual.toString());
 
-		//any = demanaAnyValid(scanner);
+		any = demanaAnyValid(scanner);
 		do {
 			mostrarOpcions();
 			eleccio = demanaEleccioValida(scanner);
@@ -120,10 +127,11 @@ public class main {
 					while (i < listaPlantacionsActual.getPlantacions() && !trobat) {
 						// si el nom de la plantacio introducida esta en la lista de plantaciones
 						for (int j = 0; j < listaPlantacionsActual.getLista()[i].getRodals().length; j++) {
-							if (text.equalsIgnoreCase(listaPlantacionsActual.getLista()[i].getRodals()[j].getTipus().getNom())) {
-								
+							if (text.equalsIgnoreCase(
+									listaPlantacionsActual.getLista()[i].getRodals()[j].getTipus().getNom())) {
+
 								System.out.println("existe");
-								
+
 								trobat = true;
 							}
 						}
@@ -210,6 +218,23 @@ public class main {
 				// Mostrar quantitat de CO2 que permet absorir cada rodal d'una plantacio en
 				// l'any actual
 				// demanar nom plantacio
+				System.out.println("Escriu el nom de la plantacio.");
+				// String nom = scanner.next();
+				trobat = false;
+				i = 0;
+				while (i < listaPlantacionsActual.getLista().length && !trobat) {
+					if (listaPlantacionsActual.getLista()[i].getNom().equalsIgnoreCase("Finca les pedres")) {
+						trobat = true;
+					}
+					i++;
+				}
+				if (trobat) {
+					for (int j = 0; j < listaPlantacionsActual.getLista()[i].getRodals().length; j++) {
+						System.out.println(listaPlantacionsActual.getLista()[i].getRodals()[j].quantitatCO2());
+					}
+				} else {
+					System.out.println("No s'ha trobat cap terreny amb aquest nom");
+				}
 				break;
 			case 14:
 				// Mostrar quantitat de CO2 que permet absorir un conjunt de plantes d'una
@@ -301,6 +326,7 @@ public class main {
 	}
 
 	public static ListaTipusTerreny LlegirFitxerTipusTerreny() {
+
 		ListaTipusTerreny listaTipusTerrenyActual = new ListaTipusTerreny();
 		try {
 			File archivoTerrenys = new File("terrenys.dat");
@@ -334,7 +360,8 @@ public class main {
 			Rodal rodal_nuevo;
 			Rodal[] array_rodal;
 			TipusTerreny terreny_nuevo;
-			int[] unitatsHra;
+			LlistaPlantes listaPlantas;
+			int unitatsHra[] = new int[5];
 			File archivoPlantacions = new File("plantacions.txt");
 			if (archivoPlantacions.exists()) {
 				BufferedReader reader = new BufferedReader(new FileReader("plantacions.txt"));
@@ -344,11 +371,13 @@ public class main {
 					int contador_co2 = 4;
 					int contador_nom_terreny = 3;
 					for (int i = 0; i < array_rodal.length; i++) {
+						listaPlantas = listaTipusTerrenyActual
+								.plantacionsTipusTerreny(line.split(";")[contador_nom_terreny]);
 
-						String nom_terreny = line.split(";")[contador_nom_terreny];
-						LlistaPlantes a = listaTipusTerrenyActual.plantacionsTipusTerreny(nom_terreny);
+						unitatsHra = listaTipusTerrenyActual.HraTipusTerreny(line.split(";")[contador_nom_terreny]);
 
-						terreny_nuevo = new TipusTerreny(a, nom_terreny,);
+						terreny_nuevo = new TipusTerreny(listaPlantas, line.split(";")[contador_nom_terreny],
+								unitatsHra);
 						contador_nom_terreny += 2;
 						rodal_nuevo = new Rodal(terreny_nuevo, Float.valueOf(line.split(";")[contador_co2]));
 						contador_co2 += 2;
@@ -367,9 +396,11 @@ public class main {
 			} else {
 				System.out.println("- No hi ha arxiu de plantacions que carregar.");
 			}
+
 		} catch (Exception e) {
 			System.out.println("!!! - Error al llegir el fitxer de les plantacions: " + e);
 		}
+
 		return listaPlantacionsActual;
 	}
 
@@ -388,18 +419,17 @@ public class main {
 					bw.write(listaPlantesActual.getLista()[i].getNom() + ";");
 					/*
 					 * 
-					bw.write(listaPlantesActual.getLista()[i].getEdatActual() + ";");
-					bw.write(listaPlantesActual.getLista()[i].getRangs().length);
-					for (int j = 0; j < listaPlantesActual.getLista()[i].getRangs().length; j++) {						
-						bw.write(";" + listaPlantesActual.getLista()[i].getRangs()[j]);
-					}
-					
-					*/					
+					 * bw.write(listaPlantesActual.getLista()[i].getEdatActual() + ";");
+					 * bw.write(listaPlantesActual.getLista()[i].getRangs().length); for (int j = 0;
+					 * j < listaPlantesActual.getLista()[i].getRangs().length; j++) { bw.write(";" +
+					 * listaPlantesActual.getLista()[i].getRangs()[j]); }
+					 * 
+					 */
 				} else {
 					bw.write("1;");
 					bw.write(listaPlantesActual.getLista()[i].getNom() + ";");
-					//bw.write(listaPlantesActual.getLista()[i].getEdatmaxima() + ";");
-					//bw.write(listaPlantesActual.getLista()[i].getAbsorcioCO2());					
+					// bw.write(listaPlantesActual.getLista()[i].getEdatmaxima() + ";");
+					// bw.write(listaPlantesActual.getLista()[i].getAbsorcioCO2());
 				}
 
 				bw.newLine();
