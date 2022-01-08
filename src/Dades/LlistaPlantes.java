@@ -35,7 +35,7 @@ public class LlistaPlantes implements Serializable{
 
 	public void afegirPlanta(Planta p) {
 		if (this.numPlantes >= this.lista.length) {
-			Planta[] listaAux = new Planta[this.numPlantes + 5];
+			Planta[] listaAux = new Planta[this.numPlantes + 1];
 			for (int i = 0; i < this.numPlantes; i++) {
 				listaAux[i] = this.lista[i];
 			}

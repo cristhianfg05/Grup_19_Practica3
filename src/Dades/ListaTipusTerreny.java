@@ -8,7 +8,6 @@ public class ListaTipusTerreny implements Serializable {
 	private int numTerreny;
 
 	public ListaTipusTerreny() {
-		super();
 		this.lista = new TipusTerreny[0]; // se crea una lista vacia
 		numTerreny = 0;
 	}
@@ -35,8 +34,8 @@ public class ListaTipusTerreny implements Serializable {
 		LlistaPlantes aux = null;
 		while (i < lista.length && !trobat) {
 			if (lista[i].getNom().equalsIgnoreCase(nom)) {
-				trobat = true;
 				aux = lista[i].getListaplantas();
+				trobat = true;
 			}
 			i++;
 		}
@@ -45,7 +44,7 @@ public class ListaTipusTerreny implements Serializable {
 	
 	public void afegirTerreny(TipusTerreny p) {
         if (this.numTerreny >= this.lista.length) {
-            TipusTerreny[] listaAux = new TipusTerreny[this.numTerreny + 5];
+            TipusTerreny[] listaAux = new TipusTerreny[this.numTerreny + 1];
             for (int i = 0; i < this.numTerreny; i++) {
                 listaAux[i] = this.lista[i];
             }

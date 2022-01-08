@@ -1,6 +1,8 @@
 package Dades;
 
-public abstract class Planta { // es abstract porque no se pueden crear plantas directamente
+import java.io.Serializable;
+
+public abstract class Planta implements Serializable{ // es abstract porque no se pueden crear plantas directamente
 	private String nom;
 
 	public Planta(String nom) {

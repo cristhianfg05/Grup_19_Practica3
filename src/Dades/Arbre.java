@@ -37,13 +37,10 @@ public class Arbre extends Planta implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Arbre [rangs=" + Arrays.toString(rangs) + ", edatactual=" + edatactual + "]";
+		return "Arbre: " + this.getNom() +  " [rangs=" + Arrays.toString(rangs) + ", edatactual=" + edatactual + "]";
 	}
 
 	public float getAbsorcioCO2() {
 		return rangs[edatactual];
-	}
-	
-	
-	
+	}	
 }

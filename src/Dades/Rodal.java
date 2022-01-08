@@ -39,7 +39,5 @@ public class Rodal {
 	public String toString() {
 		return "Rodal [tipus=" + tipus + ", superficie=" + superficie + "]";
 	}
-	
-	
 
 }

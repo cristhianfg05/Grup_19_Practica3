@@ -35,7 +35,7 @@ public class Arbust extends Planta implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Arbust [edatMaxima=" + edatMaxima + ", absorcioCO2=" + absorcioCO2 + "]";
+		return "Arbust: " + this.getNom() +  " [edatMaxima=" + edatMaxima + ", absorcioCO2=" + absorcioCO2 + "]";
 	}
 	
 }

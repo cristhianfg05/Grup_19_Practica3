@@ -7,7 +7,6 @@ public class ListaPlantacions {
 	private int numPlantacions;
 	
 	public ListaPlantacions() {
-		super();
 		this.lista = new Plantacions[0];			// se crea una lista vacia
 		this.numPlantacions = 0;
 	}
