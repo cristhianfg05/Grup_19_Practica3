@@ -20,6 +20,8 @@ public abstract class Planta { // es abstract porque no se pueden crear plantas 
 	public String getNom() {
 		return nom;
 	}
+	
+	protected abstract float getAbsorcioCO2();
 
 	public void setNom(String nom) {
 		this.nom = nom;

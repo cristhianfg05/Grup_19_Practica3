@@ -36,4 +36,9 @@ public class Arbust extends Planta {
 		return "Arbust [edatMaxima=" + edatMaxima + ", absorcioCO2=" + absorcioCO2 + "]";
 	}
 	
+	public float getAbsorcioCO2(int num) {
+		if(num>=5)
+			return absorcioCO2;
+		else return 0;
+	}
 }

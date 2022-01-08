@@ -34,6 +34,9 @@ public class Arbre extends Planta {
 		return new Arbre(this.getNom(),this.getNumPlantes(),this.rangs,this.edatactual);
 	}
 
+	public float getAbsorcioCO2(int num) {
+		return rangs[num];
+	}
 	
 
 	@Override

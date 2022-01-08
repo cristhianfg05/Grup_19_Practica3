@@ -68,6 +68,18 @@ public class LlistaPlantes {
 		if (j + 1 < der)
 			ordenarListaQuickSort(listaP, j + 1, der);
 	}
+	
+	public Planta buscarPlanta (String nom) {
+        boolean trobat = false;
+        int i = 0;
+        while (i <numPlantes && !trobat) {
+            if (lista[i].getNom().equalsIgnoreCase(nom)) {
+                trobat = true;
+            }else
+            	i++;
+        }
+        return lista[i].copia();
+    }
 
 	@Override
 	public String toString() {
